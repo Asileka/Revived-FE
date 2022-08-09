@@ -31,10 +31,10 @@ setTimeout(SplashScreen.hideAsync, 3000);
 const Drawer = createDrawerNavigator();
 
 const Stack = createStackNavigator();
-function DetailsStackScreen({ navigation }) {
+function MainItemsPage({ navigation }) {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Details Stack Screen" component={ItemList} />
+      <Stack.Screen name="Items In Your Area" component={ItemList} />
       <Stack.Screen name="Profile" component={OtherUsersProfile} />
     </Stack.Navigator>
   );
@@ -52,10 +52,9 @@ function App() {
         <Drawer.Screen
           style={{ backgroundColor: "black" }}
           name="All Items"
-          component={AllItems}
+          component={MainItemsPage}
         />
         <Drawer.Screen name="My Profile" component={MyProfile} />
-        <Drawer.Screen name="DetailsStack" component={DetailsStackScreen} />
 
         <Drawer.Screen name="Inbox" component={DetailsScreen} />
         <Drawer.Screen name="Categories" component={DetailsScreen} />
