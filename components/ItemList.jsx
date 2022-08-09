@@ -8,6 +8,8 @@ const itemsArray = [
     itemname: "Golden Prada dress size M",
     itemlocation: "M205TG",
     itemcategory: "clothing",
+
+    itemownerid: 1,
     itemowner: "Kate Bush",
     ifclaimed: "unclaimed",
     itemcreateddate: "20.06.22",
@@ -19,6 +21,8 @@ const itemsArray = [
     itemname: "Pink dress size S",
     itemlocation: "SK35TG",
     itemcategory: "clothing",
+
+    itemownerid: 2,
     itemowner: "Will Shake",
     ifclaimed: "unclaimed",
     itemcreateddate: "10.07.22",
@@ -99,4 +103,6 @@ const styles = StyleSheet.create({
   },
 });
 
+
 export default Cards;
+

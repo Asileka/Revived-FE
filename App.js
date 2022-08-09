@@ -8,6 +8,7 @@ import {
 } from "react-native";
 
 import SignInPage from "./components/SignInPage";
+import ItemList from "./components/ItemList";
 import AppLoading from "expo-app-loading";
 import MyProfile from "./components/MyProfile";
 import OtherUsersProfile from "./components/OtherUsersProfile";
@@ -40,6 +41,7 @@ const Drawer = createDrawerNavigator();
 
 function App() {
   return (
+
     <NavigationContainer style={{ backgroundColor: "black" }}>
       <Drawer.Navigator
         style={{ backgroundColor: "black" }}
@@ -63,6 +65,7 @@ function App() {
         <Drawer.Screen name="Terms" component={DetailsScreen} />
         <Drawer.Screen name="Sign In" component={DetailsScreen} />
         <Drawer.Screen name="Log Out" component={DetailsScreen} />
+
       </Drawer.Navigator>
     </NavigationContainer>
   );
