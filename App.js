@@ -6,15 +6,21 @@ import {
   View,
   Button,
 } from "react-native";
-import { Avatar } from "@rneui/themed";
-import Avatars from "./components/Avatars";
+
 import SignInPage from "./components/SignInPage";
 import AppLoading from "expo-app-loading";
-import { useFonts } from "expo-font";
+
 import * as SplashScreen from "expo-splash-screen";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createStackNavigator } from "@react-navigation/stack";
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "rgb(255, 45, 85)",
+  },
+};
+
 function HomeScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -35,16 +41,15 @@ function DetailsScreen() {
 SplashScreen.preventAutoHideAsync();
 setTimeout(SplashScreen.hideAsync, 3000);
 
-const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Sign In">{<SignInPage />}</Stack.Screen>
-        <Stack.Screen name="reVive" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-      </Stack.Navigator>
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="reVive" component={SignInPage} />
+        <Drawer.Screen name="Details" component={DetailsScreen} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
