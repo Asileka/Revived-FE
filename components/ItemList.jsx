@@ -32,14 +32,20 @@ const Cards = () => {
                     uri: i.itemimgurl,
                   }}
                 />
-                <Text style={{ marginBottom: 10 }}>
-                  The idea with React Native Elements is more about component
-                  structure than actual design.
-                </Text>
+                <Text style={{ marginBottom: 10 }}>Item Description</Text>
                 <Button
                   icon={
                     <Icon
-                      name="plussquare"
+                      name="favorite-border"
+                      color="#ffffff"
+                      iconStyle={{ marginRight: 10 }}
+                    />
+                  }
+                />
+                <Button
+                  icon={
+                    <Icon
+                      name="add"
                       color="#ffffff"
                       iconStyle={{ marginRight: 10 }}
                     />
@@ -50,7 +56,7 @@ const Cards = () => {
                     marginRight: 0,
                     marginBottom: 0,
                   }}
-                  title="VIEW NOW"
+                  title="BUY NOW"
                 />
               </Card>
             );
