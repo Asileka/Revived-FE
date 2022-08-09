@@ -47,7 +47,17 @@ const MyItemCards = () => {
                 <Text>Owner: {i.itemowner}</Text>
                 <Text>Added: {i.itemcreateddate}</Text>
                 <Text style={{ marginBottom: 10 }}>Item Description</Text>
-             
+                <Button
+                
+                  buttonStyle={{
+                    borderRadius: 0,
+                    marginLeft: 0,
+                    marginRight: 0,
+                    marginBottom: 0,
+                    backgroundColor: 'green',
+                  }}
+                  title="Edit Item"
+                />
            
               </Card>
             );

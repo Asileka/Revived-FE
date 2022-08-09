@@ -9,7 +9,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 
-
+import MyProfile from './MyProfile'
 import Cards from './ItemList'
 
 const OtherUsersProfile = ({navigation, route}) => {
@@ -124,11 +124,9 @@ const OtherUsersProfile = ({navigation, route}) => {
                 onPress={() => {
                   navigation.navigate('EditProfile');
                 }}>
-                <Text style={styles.userBtnTxt}>Edit</Text>
+                <Text style={styles.userBtnTxt}>Message</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
-                <Text style={styles.userBtnTxt}>Logout</Text>
-              </TouchableOpacity>
+             
             </>
           )}
 

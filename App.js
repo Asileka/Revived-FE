@@ -8,6 +8,7 @@ import {
 } from "react-native";
 
 import SignInPage from "./components/SignInPage";
+import ListItem from "./components/ListItem";
 import ItemList from "./components/ItemList";
 import AppLoading from "expo-app-loading";
 import MyProfile from "./components/MyProfile";
@@ -41,7 +42,6 @@ const Drawer = createDrawerNavigator();
 
 function App() {
   return (
-
     <NavigationContainer style={{ backgroundColor: "black" }}>
       <Drawer.Navigator
         style={{ backgroundColor: "black" }}
@@ -54,18 +54,19 @@ function App() {
           component={SignInPage}
         />
         <Drawer.Screen name="My Profile" component={MyProfile} />
+        <Drawer.Screen name="Inbox" component={DetailsScreen} />
+        <Drawer.Screen name="List Item" component={ListItem} />
         <Drawer.Screen
           name="Other Users Profile"
           component={OtherUsersProfile}
         />
-        <Drawer.Screen name="Inbox" component={DetailsScreen} />
+
         <Drawer.Screen name="Categories" component={DetailsScreen} />
         <Drawer.Screen name="Favourites" component={DetailsScreen} />
         <Drawer.Screen name="Map" component={DetailsScreen} />
         <Drawer.Screen name="Terms" component={DetailsScreen} />
         <Drawer.Screen name="Sign In" component={DetailsScreen} />
         <Drawer.Screen name="Log Out" component={DetailsScreen} />
-
       </Drawer.Navigator>
     </NavigationContainer>
   );

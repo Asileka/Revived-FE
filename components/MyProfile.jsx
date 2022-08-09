@@ -9,6 +9,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 
+import ListItem from './ListItem';
 
 import MyItemCards from './MyItems'
 
@@ -124,10 +125,11 @@ const MyProfile = ({navigation, route}) => {
                 onPress={() => {
                   navigation.navigate('EditProfile');
                 }}>
-                <Text style={styles.userBtnTxt}>Edit</Text>
+                <Text style={styles.userBtnTxt}>Edit Profile</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
-                <Text style={styles.userBtnTxt}>Logout</Text>
+            
+               <TouchableOpacity style={styles.userBtn} onPress={ListItem}>
+                <Text style={styles.userBtnTxt}>List Item</Text>
               </TouchableOpacity>
             </>
           )}
@@ -200,7 +202,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   userBtn: {
-    borderColor: '#2e64e5',
+    borderColor: 'green',
     borderWidth: 2,
     borderRadius: 3,
     paddingVertical: 8,
@@ -208,7 +210,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   userBtnTxt: {
-    color: '#2e64e5',
+    color: 'black',
   },
   userInfoWrapper: {
     flexDirection: 'row',
