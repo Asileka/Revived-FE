@@ -6,8 +6,8 @@ import {
   View,
   Button,
 } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import SignInPage from "./components/SignInPage";
 import ItemList from "./components/ItemList";
 import AppLoading from "expo-app-loading";
 import MyProfile from "./components/MyProfile";
@@ -16,17 +16,8 @@ import Terms from "./components/Terms";
 import * as SplashScreen from "expo-splash-screen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
+import AllItems from "./components/AllItems";
 
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate("Details")}
-      />
-    </View>
-  );
-}
 function DetailsScreen() {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -39,25 +30,33 @@ setTimeout(SplashScreen.hideAsync, 3000);
 
 const Drawer = createDrawerNavigator();
 
+const Stack = createStackNavigator();
+function DetailsStackScreen({ navigation }) {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Details Stack Screen" component={ItemList} />
+      <Stack.Screen name="Profile" component={OtherUsersProfile} />
+    </Stack.Navigator>
+  );
+}
+
 function App() {
   return (
-
     <NavigationContainer style={{ backgroundColor: "black" }}>
       <Drawer.Navigator
+        id="1"
         style={{ backgroundColor: "black" }}
         drawerContentOptions={{ backgroundColor: "green" }}
-        initialRouteName="Home"
+        initialRouteName="All Items"
       >
         <Drawer.Screen
           style={{ backgroundColor: "black" }}
           name="All Items"
-          component={SignInPage}
+          component={AllItems}
         />
         <Drawer.Screen name="My Profile" component={MyProfile} />
-        <Drawer.Screen
-          name="Other Users Profile"
-          component={OtherUsersProfile}
-        />
+        <Drawer.Screen name="DetailsStack" component={DetailsStackScreen} />
+
         <Drawer.Screen name="Inbox" component={DetailsScreen} />
         <Drawer.Screen name="Categories" component={DetailsScreen} />
         <Drawer.Screen name="Favourites" component={DetailsScreen} />
@@ -65,7 +64,6 @@ function App() {
         <Drawer.Screen name="Terms" component={DetailsScreen} />
         <Drawer.Screen name="Sign In" component={DetailsScreen} />
         <Drawer.Screen name="Log Out" component={DetailsScreen} />
-
       </Drawer.Navigator>
     </NavigationContainer>
   );

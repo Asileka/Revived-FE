@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, ScrollView, StyleSheet, Image } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text, Card, Button, Icon } from "@rneui/themed";
+
 const itemsArray = [
   {
     itemid: 1,
@@ -30,7 +31,7 @@ const itemsArray = [
       "http://picture-cdn.wheretoget.it/kite0f-l-610x610-dress-weedingdress-weeding-pink-beautiful-fashion-long+dress-elegant-blush-rose-petas-white-floor+length-light+pink-prom+dress-line+prom+dress-pinkdress-shoulder+prom+dress.jpg",
   },
 ];
-const Cards = () => {
+const Cards = ({ navigation }) => {
   return (
     <>
       <ScrollView>
@@ -49,6 +50,10 @@ const Cards = () => {
                 <Text>Category: {i.itemcategory}</Text>
                 <Text>Location: {i.itemlocation}</Text>
                 <Text>Owner: {i.itemowner}</Text>
+                <Button
+                  title="Owner"
+                  onPress={() => navigation.navigate("Profile")}
+                />
                 <Text>Added: {i.itemcreateddate}</Text>
                 <Text style={{ marginBottom: 10 }}>Item Description</Text>
                 <Button
@@ -103,6 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
 export default Cards;
-
