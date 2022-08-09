@@ -26,7 +26,7 @@ const itemsArray = [
       "http://picture-cdn.wheretoget.it/kite0f-l-610x610-dress-weedingdress-weeding-pink-beautiful-fashion-long+dress-elegant-blush-rose-petas-white-floor+length-light+pink-prom+dress-line+prom+dress-pinkdress-shoulder+prom+dress.jpg",
   },
 ];
-const Cards = () => {
+const MyItemCards = () => {
   return (
     <>
       <ScrollView>
@@ -47,27 +47,8 @@ const Cards = () => {
                 <Text>Owner: {i.itemowner}</Text>
                 <Text>Added: {i.itemcreateddate}</Text>
                 <Text style={{ marginBottom: 10 }}>Item Description</Text>
-                <Button
-                  color="#f24646"
-                  size="sm"
-                  icon={<Icon name="favorite-border" color="#ffffff" />}
-                />
-                <Button
-                  icon={
-                    <Icon
-                      name="add"
-                      color="#ffffff"
-                      iconStyle={{ marginRight: 10 }}
-                    />
-                  }
-                  buttonStyle={{
-                    borderRadius: 0,
-                    marginLeft: 0,
-                    marginRight: 0,
-                    marginBottom: 0,
-                  }}
-                  title="CLAIM NOW"
-                />
+             
+           
               </Card>
             );
           })}
@@ -99,4 +80,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Cards;
+export default MyItemCards;

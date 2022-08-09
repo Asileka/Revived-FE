@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 
 
-import MyItemCards from './MyItems'
+import Cards from './ItemList'
 
-const MyProfile = ({navigation, route}) => {
+const OtherUsersProfile = ({navigation, route}) => {
 
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -99,7 +99,7 @@ const MyProfile = ({navigation, route}) => {
           style={styles.userImg}
           source={{uri: userData ? userData.userImg || 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg' : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'}}
         />
-        <Text style={styles.userName}>{userData ? userData.fname || 'Peter' : 'Peter'} {userData ? userData.lname || 'Jones' : 'Jones'}</Text>
+        <Text style={styles.userName}>{userData ? userData.fname || 'Rosemary' : 'Rosemary'} {userData ? userData.lname || 'Smith' : 'Smith'}</Text>
         {/* <Text>{route.params ? route.params.userId : user.uid}</Text> */}
         <Text style={styles.aboutUser}>
         {userData ? userData.about || 'No details added.' : 'No details added'}
@@ -161,13 +161,13 @@ const MyProfile = ({navigation, route}) => {
 
            { //////// ITEM LIST
              }
-       <MyItemCards/>
+       <Cards/>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default MyProfile;
+export default OtherUsersProfile;
 
 const styles = StyleSheet.create({
   container: {
