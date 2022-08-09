@@ -9,7 +9,8 @@ import {
 
 import SignInPage from "./components/SignInPage";
 import AppLoading from "expo-app-loading";
-
+import MyProfile from "./components/MyProfile";
+import Terms from "./components/Terms";
 import * as SplashScreen from "expo-splash-screen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
@@ -40,8 +41,16 @@ function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="reVive" component={SignInPage} />
-        <Drawer.Screen name="Details" component={DetailsScreen} />
+        <Drawer.Screen name="All Items" component={SignInPage} />
+
+        <Drawer.Screen name="My Profile" component={MyProfile} />
+        <Drawer.Screen name="Inbox" component={DetailsScreen} />
+        <Drawer.Screen name="Categories" component={DetailsScreen} />
+        <Drawer.Screen name="Favourites" component={DetailsScreen} />
+        <Drawer.Screen name="Map" component={DetailsScreen} />
+        <Drawer.Screen name="Terms" component={DetailsScreen} />
+        <Drawer.Screen name="Sign In" component={DetailsScreen} />
+        <Drawer.Screen name="Log Out" component={DetailsScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
