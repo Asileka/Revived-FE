@@ -17,9 +17,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   signintext: {
-    flex: 2,
     fontSize: 50,
-    color: "#f5f7f7",
   },
 });
 export default SignInPage;

@@ -13,13 +13,6 @@ import AppLoading from "expo-app-loading";
 import * as SplashScreen from "expo-splash-screen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
-const MyTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: "rgb(255, 45, 85)",
-  },
-};
 
 function HomeScreen({ navigation }) {
   return (
