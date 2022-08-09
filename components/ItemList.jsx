@@ -6,12 +6,22 @@ const itemsArray = [
   {
     itemid: 1,
     itemname: "Golden Prada dress size M",
+    itemlocation: "M205TG",
+    itemcategory: "clothing",
+    itemowner: "Kate Bush",
+    ifclaimed: "unclaimed",
+    itemcreateddate: "20.06.22",
     itemimgurl:
       "https://a.1stdibscdn.com/prada-gold-metallic-leather-dress-fairytale-for-sale/1121189/v_80933021574347855196/8093302_master.jpg",
   },
   {
     itemid: 2,
     itemname: "Pink dress size S",
+    itemlocation: "SK35TG",
+    itemcategory: "clothing",
+    itemowner: "Will Shake",
+    ifclaimed: "unclaimed",
+    itemcreateddate: "10.07.22",
     itemimgurl:
       "http://picture-cdn.wheretoget.it/kite0f-l-610x610-dress-weedingdress-weeding-pink-beautiful-fashion-long+dress-elegant-blush-rose-petas-white-floor+length-light+pink-prom+dress-line+prom+dress-pinkdress-shoulder+prom+dress.jpg",
   },
@@ -32,15 +42,15 @@ const Cards = () => {
                     uri: i.itemimgurl,
                   }}
                 />
+                <Text>Category: {i.itemcategory}</Text>
+                <Text>Location: {i.itemlocation}</Text>
+                <Text>Owner: {i.itemowner}</Text>
+                <Text>Added: {i.itemcreateddate}</Text>
                 <Text style={{ marginBottom: 10 }}>Item Description</Text>
                 <Button
-                  icon={
-                    <Icon
-                      name="favorite-border"
-                      color="#ffffff"
-                      iconStyle={{ marginRight: 10 }}
-                    />
-                  }
+                  color="#f24646"
+                  size="sm"
+                  icon={<Icon name="favorite-border" color="#ffffff" />}
                 />
                 <Button
                   icon={
@@ -56,7 +66,7 @@ const Cards = () => {
                     marginRight: 0,
                     marginBottom: 0,
                   }}
-                  title="BUY NOW"
+                  title="CLAIM NOW"
                 />
               </Card>
             );
