@@ -8,6 +8,7 @@ import {
 } from "react-native";
 
 import SignInPage from "./components/SignInPage";
+import ItemList from "./components/ItemList";
 import AppLoading from "expo-app-loading";
 
 import * as SplashScreen from "expo-splash-screen";
@@ -42,6 +43,7 @@ function App() {
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="reVive" component={SignInPage} />
         <Drawer.Screen name="Details" component={DetailsScreen} />
+        <Drawer.Screen name="Item List" component={ItemList} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
