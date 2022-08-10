@@ -23,7 +23,7 @@ const SignIn = () => {
 
   return (
     <View>
-      <Text h2>Sign In</Text>
+  
       <Input
         placeholder="Email"
         onChangeText={(newEmail) => setEmail(newEmail)}

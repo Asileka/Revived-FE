@@ -10,6 +10,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import SearchBar from "./components/SearchBar";
 import ItemList from "./components/ItemList";
 import AppLoading from "expo-app-loading";
+import MyMap from "./components/MapView";
 import MyProfile from "./components/MyProfile";
 import OtherUsersProfile from "./components/OtherUsersProfile";
 import Terms from "./components/Terms";
@@ -79,7 +80,7 @@ function App() {
           <Drawer.Screen name="Inbox" component={DetailsScreen} />
           <Drawer.Screen name="Categories" component={DetailsScreen} />
           <Drawer.Screen name="Favourites" component={DetailsScreen} />
-          <Drawer.Screen name="Map" component={DetailsScreen} />
+          <Drawer.Screen name="Map" component={MyMap} />
           <Drawer.Screen name="Terms" component={Terms} />
 
           <Drawer.Screen name="Log Out" component={DetailsScreen} />
