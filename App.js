@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import SearchBar from "./components/SearchBar";
 import ItemList from "./components/ItemList";
 import AppLoading from "expo-app-loading";
 import MyProfile from "./components/MyProfile";
@@ -19,10 +20,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import AllItems from "./components/AllItems";
 import ListItem from "./components/ListItem";
 import SignIn from "./components/SignIn";
-
 function DetailsScreen() {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <Text>Details Screen</Text>
     </View>
   );

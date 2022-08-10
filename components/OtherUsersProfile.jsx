@@ -139,6 +139,7 @@ const OtherUsersProfile = ({ navigation, route }) => {
               </TouchableOpacity>
               <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
                 <Text style={styles.userBtnTxt}>Logout</Text>
+                <Text style={styles.userBtnTxt}>Message</Text>
               </TouchableOpacity>
             </>
           )}
