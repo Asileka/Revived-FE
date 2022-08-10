@@ -3,14 +3,14 @@ import { Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import Cards from './ItemList'
-const SignInPage = () => {
+import ItemList from "./ItemList";
+const AllItems = () => {
   return (
     <View styles={styles.signinpagecontainer}>
       <Text h2 style={styles.signintext}>
-       All Items
+        All Items
       </Text>
-      <Cards/>
+      <ItemList />
     </View>
   );
 };
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
     fontSize: 50,
   },
 });
-export default SignInPage;
+export default AllItems;

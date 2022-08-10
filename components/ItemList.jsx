@@ -4,7 +4,9 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text, Card, Button, Icon } from "@rneui/themed";
 import { NavigationContainer } from "@react-navigation/native";
 
+
  export const itemsArray = [
+
   {
     itemid: 1,
     itemname: "Golden Prada dress size M",
@@ -50,11 +52,22 @@ const Cards = ({ navigation }) => {
                 />
                 <Text>Category: {i.itemcategory}</Text>
                 <Text>Location: {i.itemlocation}</Text>
-                <Text>Owner: {i.itemowner}</Text>
+
+                <Text
+                  style={styles.link}
+                  onPress={() =>
+                    navigation.navigate("Profile", {
+                      itemOwnerID: i.itemownerid,
+                    })
+                  }
+                >
+                  Owner: {i.itemowner}
+                </Text>
                 <Button
                   title="Owner"
                   onPress={() => navigation.navigate("Profile")}
                 />
+
                 <Text>Added: {i.itemcreateddate}</Text>
                 <Text style={{ marginBottom: 10 }}>Item Description</Text>
                 <Button
@@ -107,6 +120,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 5,
   },
+  link: {
+    color: "#2ebfc9",
+    textDecorationLine: "underline",
+  },
 });
 
+
 export default Cards;
+

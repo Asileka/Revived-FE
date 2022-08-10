@@ -29,16 +29,14 @@ const SignIn = () => {
         onChangeText={(newEmail) => setEmail(newEmail)}
         defaultValue={email}
       />
-      <Text h2>{email}</Text>
-
       <Input
         placeholder="Password"
         secureTextEntry={true}
         onChangeText={(newPassword) => setPassword(newPassword)}
         defaultValue={password}
       />
-      <Text h2>{password}</Text>
-      <Button color="green" title="Log In">Log In  </Button>  
+
+    <Button color="green" title="Log In">Log In  </Button> 
       <Text style={stylesignin.ortext}>or</Text>
       <Button color="green" title="Create An Account" />
     </View>
@@ -46,8 +44,6 @@ const SignIn = () => {
 };
 
 export default SignIn;
-
-
 const stylesignin = StyleSheet.create({
   ortext: {
     color: "black",
@@ -61,3 +57,4 @@ const stylesignin = StyleSheet.create({
   
   }
 });
+

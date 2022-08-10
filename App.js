@@ -7,6 +7,7 @@ import {
   Button,
 } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
+
 import SearchBar from "./components/SearchBar";
 import ItemList from "./components/ItemList";
 import AppLoading from "expo-app-loading";
@@ -16,10 +17,9 @@ import Terms from "./components/Terms";
 import * as SplashScreen from "expo-splash-screen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
-
+import AllItems from "./components/AllItems";
 import ListItem from "./components/ListItem";
 import SignIn from "./components/SignIn";
-
 function DetailsScreen() {
   return (
     <View
@@ -42,13 +42,7 @@ const Stack = createStackNavigator();
 const EditNav = createStackNavigator();
 function MainItemsPage({ navigation }) {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerStyle: { elevation: 0 },
-
-        cardStyle: { backgroundColor: "black" },
-      }}
-    >
+    <Stack.Navigator>
       <Stack.Screen name="Items In Your Area" component={ItemList} />
       <Stack.Screen name="Profile" component={OtherUsersProfile} />
     </Stack.Navigator>
@@ -57,35 +51,38 @@ function MainItemsPage({ navigation }) {
 
 function App() {
   return (
-    <>
-      <SearchBar color="red" />
-      <NavigationContainer style={{ backgroundColor: "black" }}>
-        <Drawer.Navigator
-          color="red"
-          id="1"
+    <NavigationContainer>
+      <Drawer.Navigator
+        id="1"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: "#0d8575",
+          },
+          headerTintColor: "#edf7f6",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+        initialRouteName="All Items"
+      >
+        <Drawer.Screen
           style={{ backgroundColor: "black" }}
-          drawerContentOptions={{ backgroundColor: "green" }}
-          initialRouteName="All Items"
-        >
-          <Drawer.Screen fontColor="red" name="Sign In" component={SignIn} />
-          <Drawer.Screen name="My Profile" component={MyProfile} />
-          <Drawer.Screen name="List Item" component={ListItem} />
-          <Drawer.Screen
-            color="#ff5c5c"
-            name="Other Users Profile"
-            component={OtherUsersProfile}
-          />
+          name="All Items"
+          component={MainItemsPage}
+        />
+        <Drawer.Screen name="Sign In" component={SignIn} />
+        <Drawer.Screen name="My Profile" component={MyProfile} />
+        <Drawer.Screen name="List Item" component={ListItem} />
 
-          <Drawer.Screen name="Inbox" component={DetailsScreen} />
-          <Drawer.Screen name="Categories" component={DetailsScreen} />
-          <Drawer.Screen name="Favourites" component={DetailsScreen} />
-          <Drawer.Screen name="Map" component={DetailsScreen} />
-          <Drawer.Screen name="Terms" component={Terms} />
+        <Drawer.Screen name="Inbox" component={DetailsScreen} />
+        <Drawer.Screen name="Categories" component={DetailsScreen} />
+        <Drawer.Screen name="Favourites" component={DetailsScreen} />
+        <Drawer.Screen name="Map" component={DetailsScreen} />
+        <Drawer.Screen name="Terms" component={DetailsScreen} />
 
-          <Drawer.Screen name="Log Out" component={DetailsScreen} />
-        </Drawer.Navigator>
-      </NavigationContainer>
-    </>
+        <Drawer.Screen name="Log Out" component={DetailsScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -7,45 +7,38 @@ import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
-} from 'react-native';
+} from "react-native";
 
+import Cards from "./ItemList";
 
-import Cards from './ItemList'
-
-const OtherUsersProfile = ({navigation, route}) => {
-
+const OtherUsersProfile = ({ navigation, route }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleted, setDeleted] = useState(false);
   const [userData, setUserData] = useState(null);
+  const { itemOwnerID } = route.params;
 
   const fetchItems = async () => {
     try {
       const list = [];
 
       await firestore()
-        .collection('items')
-        .where('userId', '==', route.params ? route.params.userId : user.uid)
-        .orderBy('postTime', 'desc')
+        .collection("items")
+        .where("userId", "==", route.params ? route.params.userId : user.uid)
+        .orderBy("postTime", "desc")
         .get()
         .then((querySnapshot) => {
           // console.log('Total Posts: ', querySnapshot.size);
 
           querySnapshot.forEach((doc) => {
-            const {
-              userId,
-              post,
-              postImg,
-              postTime,
-              likes,
-              comments,
-            } = doc.data();
+            const { userId, post, postImg, postTime, likes, comments } =
+              doc.data();
             list.push({
               id: doc.id,
               userId,
-              userName: 'Test Name',
+              userName: "Test Name",
               userImg:
-                'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
+                "https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg",
               postTime: postTime,
               post,
               postImg,
@@ -62,24 +55,24 @@ const OtherUsersProfile = ({navigation, route}) => {
         setLoading(false);
       }
 
-      console.log('Items: ', items);
+      console.log("Items: ", items);
     } catch (e) {
       console.log(e);
     }
   };
 
-  const getUser = async() => {
+  const getUser = async () => {
     await firestore()
-    .collection('users')
-    .doc( route.params ? route.params.userId : user.uid)
-    .get()
-    .then((documentSnapshot) => {
-      if( documentSnapshot.exists ) {
-        console.log('User Data', documentSnapshot.data());
-        setUserData(documentSnapshot.data());
-      }
-    })
-  }
+      .collection("users")
+      .doc(route.params ? route.params.userId : user.uid)
+      .get()
+      .then((documentSnapshot) => {
+        if (documentSnapshot.exists) {
+          console.log("User Data", documentSnapshot.data());
+          setUserData(documentSnapshot.data());
+        }
+      });
+  };
 
   useEffect(() => {
     getUser();
@@ -90,22 +83,39 @@ const OtherUsersProfile = ({navigation, route}) => {
   const handleDelete = () => {};
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <ScrollView
         style={styles.container}
-        contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
-        showsVerticalScrollIndicator={false}>
+        contentContainerStyle={{
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        showsVerticalScrollIndicator={false}
+      >
         <Image
           style={styles.userImg}
-          source={{uri: userData ? userData.userImg || 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg' : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'}}
+          source={{
+            uri: userData
+              ? userData.userImg ||
+                "https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg"
+              : "https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg",
+          }}
         />
-        <Text style={styles.userName}>{userData ? userData.fname || 'Rosemary' : 'Rosemary'} {userData ? userData.lname || 'Smith' : 'Smith'}</Text>
+        <Text>{itemOwnerID}</Text>
+        <Text style={styles.userName}>
+          {userData ? userData.fname || "Rosemary" : "Rosemary"}{" "}
+          {userData ? userData.lname || "Smith" : "Smith"}
+        </Text>
         {/* <Text>{route.params ? route.params.userId : user.uid}</Text> */}
         <Text style={styles.aboutUser}>
-        {userData ? userData.about || 'No details added.' : 'No details added'}
+          {userData
+            ? userData.about || "No details added."
+            : "No details added"}
         </Text>
         <Text style={styles.aboutUser}>
-        {userData ? userData.about || 'Chosen Charity: CHARITY' : 'Chosen Charity: CHARITY'}
+          {userData
+            ? userData.about || "Chosen Charity: CHARITY"
+            : "Chosen Charity: CHARITY"}
         </Text>
         <View style={styles.userBtnWrapper}>
           {route.params ? (
@@ -122,15 +132,17 @@ const OtherUsersProfile = ({navigation, route}) => {
               <TouchableOpacity
                 style={styles.userBtn}
                 onPress={() => {
-                  navigation.navigate('EditProfile');
-                }}>
+                  navigation.navigate("EditProfile");
+                }}
+              >
+                <Text style={styles.userBtnTxt}>Edit</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
+                <Text style={styles.userBtnTxt}>Logout</Text>
                 <Text style={styles.userBtnTxt}>Message</Text>
               </TouchableOpacity>
-            
             </>
           )}
-
-          
         </View>
 
         <View style={styles.userInfoWrapper}>
@@ -142,24 +154,16 @@ const OtherUsersProfile = ({navigation, route}) => {
             <Text style={styles.userInfoTitle}>{items.length}</Text>
             <Text style={styles.userInfoSubTitle}>Items Donated</Text>
           </View>
-      
         </View>
 
         {items.map((item) => (
           <PostCard key={item.id} item={item} onDelete={handleDelete} />
         ))}
 
-
-
-
-   
-
-
-
-
-           { //////// ITEM LIST
-             }
-       <Cards/>
+        {
+          //////// ITEM LIST
+        }
+        <Cards />
       </ScrollView>
     </SafeAreaView>
   );
@@ -170,7 +174,7 @@ export default OtherUsersProfile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 20,
   },
   userImg: {
@@ -180,25 +184,25 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 10,
     marginBottom: 10,
   },
   aboutUser: {
     fontSize: 12,
-    fontWeight: '600',
-    color: '#666',
-    textAlign: 'center',
+    fontWeight: "600",
+    color: "#666",
+    textAlign: "center",
     marginBottom: 10,
   },
   userBtnWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
+    flexDirection: "row",
+    justifyContent: "center",
+    width: "100%",
     marginBottom: 10,
   },
   userBtn: {
-    borderColor: '#2e64e5',
+    borderColor: "#2e64e5",
     borderWidth: 2,
     borderRadius: 3,
     paddingVertical: 8,
@@ -206,26 +210,26 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   userBtnTxt: {
-    color: '#2e64e5',
+    color: "#2e64e5",
   },
   userInfoWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
     marginVertical: 20,
   },
   userInfoItem: {
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   userInfoTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
-    textAlign: 'center',
+    textAlign: "center",
   },
   userInfoSubTitle: {
     fontSize: 12,
-    color: '#666',
-    textAlign: 'center',
+    color: "#666",
+    textAlign: "center",
   },
 });
