@@ -4,7 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text, Card, Button, Icon } from "@rneui/themed";
 import { NavigationContainer } from "@react-navigation/native";
 
-const itemsArray = [
+ export const itemsArray = [
   {
     itemid: 1,
     itemname: "Golden Prada dress size M",

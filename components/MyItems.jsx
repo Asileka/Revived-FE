@@ -27,6 +27,29 @@ const itemsArray = [
   },
 ];
 const MyItemCards = () => {
+
+  const [items, setItems] = useState([]);
+
+  const [isLoading, setIsLoading] = useState("");
+  const [err, setErr] = useState("");
+
+  const handleDelete = (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+    setErr(null);
+    fetch(`https://adam-nc-news.herokuapp.com/api/comments/${comment_id}`, {
+      method: "DELETE",
+    }).then(() => {
+      setItems((curr) => {
+        return items.filter((item) => {
+          return item.item !== item;
+        });
+      });
+      setIsLoading(false);
+    });
+  };
+
+
   return (
     <>
       <ScrollView>
@@ -47,16 +70,16 @@ const MyItemCards = () => {
                 <Text>Owner: {i.itemowner}</Text>
                 <Text>Added: {i.itemcreateddate}</Text>
                 <Text style={{ marginBottom: 10 }}>Item Description</Text>
-                <Button
-                
+                <Button color= 'pink'
+                 
                   buttonStyle={{
+                    
                     borderRadius: 0,
                     marginLeft: 0,
                     marginRight: 0,
                     marginBottom: 0,
-                    backgroundColor: 'green',
                   }}
-                  title="Edit Item"
+                  title="Delete Item"
                 />
            
               </Card>

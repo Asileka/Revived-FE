@@ -9,7 +9,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 
-import MyProfile from './MyProfile'
+
 import Cards from './ItemList'
 
 const OtherUsersProfile = ({navigation, route}) => {
@@ -126,7 +126,7 @@ const OtherUsersProfile = ({navigation, route}) => {
                 }}>
                 <Text style={styles.userBtnTxt}>Message</Text>
               </TouchableOpacity>
-             
+            
             </>
           )}
 
