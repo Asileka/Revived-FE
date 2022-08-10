@@ -45,11 +45,18 @@ function MainItemsPage({ navigation }) {
 
 function App() {
   return (
-    <NavigationContainer style={{ backgroundColor: "black" }}>
+    <NavigationContainer>
       <Drawer.Navigator
         id="1"
-        style={{ backgroundColor: "black" }}
-        drawerContentOptions={{ backgroundColor: "green" }}
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: "#0d8575",
+          },
+          headerTintColor: "#edf7f6",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
         initialRouteName="All Items"
       >
         <Drawer.Screen

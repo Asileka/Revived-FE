@@ -29,7 +29,6 @@ const SignIn = () => {
         onChangeText={(newEmail) => setEmail(newEmail)}
         defaultValue={email}
       />
-      <Text h2>{email}</Text>
 
       <Input
         placeholder="Password"
@@ -37,7 +36,7 @@ const SignIn = () => {
         onChangeText={(newPassword) => setPassword(newPassword)}
         defaultValue={password}
       />
-      <Text h2>{password}</Text>
+
       <Button title="Log In" />
       <Text h2>Or</Text>
       <Button title="Create An Account" />

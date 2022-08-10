@@ -52,7 +52,11 @@ const Cards = ({ navigation }) => {
                 <Text>Location: {i.itemlocation}</Text>
                 <Text
                   style={styles.link}
-                  onPress={() => navigation.navigate("Profile")}
+                  onPress={() =>
+                    navigation.navigate("Profile", {
+                      itemOwnerID: i.itemownerid,
+                    })
+                  }
                 >
                   Owner: {i.itemowner}
                 </Text>
