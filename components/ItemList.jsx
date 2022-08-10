@@ -50,11 +50,13 @@ const Cards = ({ navigation }) => {
                 />
                 <Text>Category: {i.itemcategory}</Text>
                 <Text>Location: {i.itemlocation}</Text>
-                <Text>Owner: {i.itemowner}</Text>
-                <Button
-                  title="Owner"
+                <Text
+                  style={styles.link}
                   onPress={() => navigation.navigate("Profile")}
-                />
+                >
+                  Owner: {i.itemowner}
+                </Text>
+
                 <Text>Added: {i.itemcreateddate}</Text>
                 <Text style={{ marginBottom: 10 }}>Item Description</Text>
                 <Button
@@ -106,6 +108,10 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     marginTop: 5,
+  },
+  link: {
+    color: "#2ebfc9",
+    textDecorationLine: "underline",
   },
 });
 
