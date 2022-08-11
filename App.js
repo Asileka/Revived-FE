@@ -79,8 +79,12 @@ function App() {
         <Drawer.Screen name="Inbox" component={DetailsScreen} />
         <Drawer.Screen name="Categories" component={DetailsScreen} />
         <Drawer.Screen name="Favourites" component={DetailsScreen} />
+        <Drawer.Screen
+          name="Other Users Profile"
+          component={OtherUsersProfile}
+        />
         <Drawer.Screen name="Map" component={MyMap} />
-        <Drawer.Screen name="Terms" component={DetailsScreen} />
+        <Drawer.Screen name="Terms" component={Terms} />
         <Drawer.Screen name="Sign In" component={SignIn} />
         <Drawer.Screen name="Log Out" component={DetailsScreen} />
       </Drawer.Navigator>

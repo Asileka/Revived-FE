@@ -55,6 +55,7 @@ const Cards = ({ navigation }) => {
 
                 <Text
                   style={styles.link}
+                 
                   onPress={() =>
                     navigation.navigate("Profile", {
                       itemOwnerID: i.itemownerid,
@@ -64,8 +65,16 @@ const Cards = ({ navigation }) => {
                   Owner: {i.itemowner}
                 </Text>
                 <Button
-                  title="Owner"
+                
+                  title="Contact Owner"
                   onPress={() => navigation.navigate("Profile")}
+                   buttonStyle={{
+                    borderRadius: 0,
+                    backgroundColor: '#0d8575',
+                    marginLeft: 0,
+                    marginRight: 0,
+                    marginBottom: 0,
+                  }}
                 />
 
                 <Text>Added: {i.itemcreateddate}</Text>
@@ -85,6 +94,7 @@ const Cards = ({ navigation }) => {
                   }
                   buttonStyle={{
                     borderRadius: 0,
+                    backgroundColor: '#4287f5',
                     marginLeft: 0,
                     marginRight: 0,
                     marginBottom: 0,
@@ -103,6 +113,7 @@ const Cards = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+     backgroundColor: '#0d8575',
   },
   fonts: {
     marginBottom: 8,
@@ -121,7 +132,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   link: {
-    color: "#2ebfc9",
+    color: "#000000",
+   
     textDecorationLine: "underline",
   },
 });
