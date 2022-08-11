@@ -2,41 +2,40 @@ import * as React from "react";
 
 
 
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import { View, ScrollView, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text, Card, Button, Icon } from "@rneui/themed";
-const itemsArray = [
-  {
-    itemid: 1,
-    itemname: "Golden Prada dress size M",
-    itemlocation: "M205TG",
-    itemcategory: "clothing",
-    itemowner: "Kate Bush",
-    ifclaimed: "unclaimed",
-    itemcreateddate: "20.06.22",
-    itemimgurl:
-      "https://a.1stdibscdn.com/prada-gold-metallic-leather-dress-fairytale-for-sale/1121189/v_80933021574347855196/8093302_master.jpg",
-  },
-  {
-    itemid: 2,
-    itemname: "Pink dress size S",
-    itemlocation: "SK35TG",
-    itemcategory: "clothing",
-    itemowner: "Will Shake",
-    ifclaimed: "unclaimed",
-    itemcreateddate: "10.07.22",
-    itemimgurl:
-      "http://picture-cdn.wheretoget.it/kite0f-l-610x610-dress-weedingdress-weeding-pink-beautiful-fashion-long+dress-elegant-blush-rose-petas-white-floor+length-light+pink-prom+dress-line+prom+dress-pinkdress-shoulder+prom+dress.jpg",
-  },
-];
+
 const MyItemCards = () => {
 
   const [items, setItems] = useState([]);
     const [itemData, setItemData] = useState([]);
 
-  const [isLoading, setIsLoading] = useState("");
-  const [err, setErr] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  
+
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(`https://revive-be.herokuapp.com/items/`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((items) => {
+  
+        setItemData(() => {
+          return items;
+        });
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError({ err });
+      });
+  }, [setItemData]);
+
+
 
   
 
@@ -65,7 +64,7 @@ const MyItemCards = () => {
     <>
       <ScrollView>
         <View style={styles.container}>
-          {itemsArray.map((i) => {
+          {itemData.map((i) => {
             return (
               <Card key={i.itemid}>
                 <Card.Title>{i.itemname}</Card.Title>

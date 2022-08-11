@@ -13,7 +13,6 @@ import { useSearchParams } from "react-router-dom";
 
 import MyItemCards from './MyItems'
 
-import DeleteMyItem from './DeleteMyItem';
 
 const MyProfile = ({navigation, route}) => {
 
