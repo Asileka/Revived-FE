@@ -1,5 +1,9 @@
 import * as React from "react";
-import { View, ScrollView, StyleSheet, Image } from "react-native";
+
+
+
+import {useState} from 'react';
+import { View, ScrollView, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text, Card, Button, Icon } from "@rneui/themed";
 const itemsArray = [
@@ -29,21 +33,28 @@ const itemsArray = [
 const MyItemCards = () => {
 
   const [items, setItems] = useState([]);
+    const [itemData, setItemData] = useState([]);
 
   const [isLoading, setIsLoading] = useState("");
   const [err, setErr] = useState("");
+
+  
+
+
+
+
+
 
   const handleDelete = (event) => {
     event.preventDefault();
     setIsLoading(true);
     setErr(null);
-    fetch(`https://adam-nc-news.herokuapp.com/api/comments/${comment_id}`, {
+    fetch(`https://revive-be.herokuapp.com/items/62f4d4c15866dad7a0451d68`, {
       method: "DELETE",
     }).then(() => {
-      setItems((curr) => {
-        return items.filter((item) => {
-          return item.item !== item;
-        });
+      setItemData((curr) => {
+
+        return itemData
       });
       setIsLoading(false);
     });
@@ -70,17 +81,10 @@ const MyItemCards = () => {
                 <Text>Owner: {i.itemowner}</Text>
                 <Text>Added: {i.itemcreateddate}</Text>
                 <Text style={{ marginBottom: 10 }}>Item Description</Text>
-                <Button color= 'pink'
-                 
-                  buttonStyle={{
-                    
-                    borderRadius: 0,
-                    marginLeft: 0,
-                    marginRight: 0,
-                    marginBottom: 0,
-                  }}
-                  title="Delete Item"
-                />
+
+                <TouchableOpacity style={styles.userBtn} onPress={handleDelete}>
+        <Text style={styles.userBtnTxt}>Delete Item</Text>
+      </TouchableOpacity>
            
               </Card>
             );
@@ -101,6 +105,18 @@ const styles = StyleSheet.create({
   user: {
     flexDirection: "row",
     marginBottom: 6,
+  },
+   userBtn: {
+    borderColor: "green",
+    borderWidth: 2,
+    borderRadius: 3,
+    alignItems: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginHorizontal: 5,
+  },
+  userBtnTxt: {
+    color: "black",
   },
   image: {
     width: 30,
