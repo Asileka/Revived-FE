@@ -14,7 +14,7 @@ import MyItemCards from './MyItems'
 
 const MyProfile = ({navigation, route}) => {
 
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState('');
   const [loading, setLoading] = useState(true);
   const [deleted, setDeleted] = useState(false);
   const [userData, setUserData] = useState(null);
