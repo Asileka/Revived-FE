@@ -24,6 +24,7 @@ import ListItem from "./components/ListItem";
 import SignIn from "./components/SignIn";
 import EditUsername from "./components/EditProfile";
 import { userContext } from "./components/Contexts";
+const [currentUserID, setCurrentUserID] = useState("1");
 function DetailsScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -78,7 +79,7 @@ function MainItemsPage({ navigation }) {
 
 function App() {
   return (
-    <userContext.Provider value={"62f4ca92859022833060019b"}>
+    <userContext.Provider value={{ currentUserID, setCurrentUserID }}>
       <NavigationContainer>
         <Drawer.Navigator
           id="1"
