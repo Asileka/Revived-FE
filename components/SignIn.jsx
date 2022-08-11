@@ -13,7 +13,7 @@ const SignIn = () => {
   const [disableRegister, setDisableRegister] = useState(false);
   const [disableLogin, setDisableLogin] = useState(false);
   const [currentUserID, setCurrentUserID] = useState("1");
-  let lettUserID = "1";
+
   function sendLogin() {
     return axios
       .post(`https://revive-be.herokuapp.com/api/login`, {
@@ -23,8 +23,7 @@ const SignIn = () => {
       .then((res) => {
         setSuccess("Success!");
         setDisableLogin(true);
-        setCurrentUserID(res.data.userid);
-        lettUserID = currentUserID;
+        setCurrentUserID(res.data._id);
         return res.status;
       })
       .catch((err) => {

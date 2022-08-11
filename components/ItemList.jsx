@@ -1,20 +1,14 @@
 import * as React from "react";
 
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from "react";
 import { View, ScrollView, StyleSheet, Image } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text, Card, Button, Icon } from "@rneui/themed";
 import { NavigationContainer } from "@react-navigation/native";
 
-import SearchBar from './SearchBar';
-
-
-
-
+import SearchBar from "./SearchBar";
 
 const Cards = ({ navigation }) => {
-
-
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [itemData, setItemData] = useState([]);
@@ -26,25 +20,19 @@ const Cards = ({ navigation }) => {
         return response.json();
       })
       .then((items) => {
-        console.log(items, 'SEEING ITEMS???')
         setItemData(() => {
           return items;
         });
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err);
         setError({ err });
       });
   }, [setItemData]);
 
-
-
-
-
   return (
     <>
-        <SearchBar />
+      <SearchBar />
       <ScrollView>
         <View style={styles.container}>
           {itemData.map((i) => {
@@ -63,7 +51,6 @@ const Cards = ({ navigation }) => {
 
                 <Text
                   style={styles.link}
-                 
                   onPress={() =>
                     navigation.navigate("Profile", {
                       itemOwnerID: i.itemownerid,
@@ -72,18 +59,17 @@ const Cards = ({ navigation }) => {
                 >
                   Owner: {i.itemowner}
                 </Text>
-                <Button
-                
+                {/* <Button
                   title="Contact Owner"
                   onPress={() => navigation.navigate("Profile")}
-                   buttonStyle={{
+                  buttonStyle={{
                     borderRadius: 0,
-                    backgroundColor: '#0d8575',
+                    backgroundColor: "#0d8575",
                     marginLeft: 0,
                     marginRight: 0,
                     marginBottom: 0,
                   }}
-                />
+                /> */}
 
                 <Text>Added: {i.itemcreateddate}</Text>
                 <Text style={{ marginBottom: 10 }}>Item Description</Text>
@@ -102,7 +88,7 @@ const Cards = ({ navigation }) => {
                   }
                   buttonStyle={{
                     borderRadius: 0,
-                    backgroundColor: '#4287f5',
+                    backgroundColor: "#4287f5",
                     marginLeft: 0,
                     marginRight: 0,
                     marginBottom: 0,
@@ -121,7 +107,7 @@ const Cards = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-     backgroundColor: '#0d8575',
+    backgroundColor: "#0d8575",
   },
   fonts: {
     marginBottom: 8,
@@ -141,11 +127,9 @@ const styles = StyleSheet.create({
   },
   link: {
     color: "#000000",
-   
+
     textDecorationLine: "underline",
   },
 });
 
-
 export default Cards;
-
