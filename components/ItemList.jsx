@@ -1,46 +1,53 @@
 import * as React from "react";
+
+import {useState, useEffect} from 'react';
 import { View, ScrollView, StyleSheet, Image } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text, Card, Button, Icon } from "@rneui/themed";
 import { NavigationContainer } from "@react-navigation/native";
 
 import SearchBar from './SearchBar';
- export const itemsArray = [
 
-  {
-    itemid: 1,
-    itemname: "Golden Prada dress size M",
-    itemlocation: "M205TG",
-    itemcategory: "clothing",
 
-    itemownerid: 1,
-    itemowner: "Kate Bush",
-    ifclaimed: "unclaimed",
-    itemcreateddate: "20.06.22",
-    itemimgurl:
-      "https://a.1stdibscdn.com/prada-gold-metallic-leather-dress-fairytale-for-sale/1121189/v_80933021574347855196/8093302_master.jpg",
-  },
-  {
-    itemid: 2,
-    itemname: "Pink dress size S",
-    itemlocation: "SK35TG",
-    itemcategory: "clothing",
 
-    itemownerid: 2,
-    itemowner: "Will Shake",
-    ifclaimed: "unclaimed",
-    itemcreateddate: "10.07.22",
-    itemimgurl:
-      "http://picture-cdn.wheretoget.it/kite0f-l-610x610-dress-weedingdress-weeding-pink-beautiful-fashion-long+dress-elegant-blush-rose-petas-white-floor+length-light+pink-prom+dress-line+prom+dress-pinkdress-shoulder+prom+dress.jpg",
-  },
-];
+
+
 const Cards = ({ navigation }) => {
+
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [itemData, setItemData] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(`https://revive-be.herokuapp.com/items/`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((items) => {
+        console.log(items, 'SEEING ITEMS???')
+        setItemData(() => {
+          return items;
+        });
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError({ err });
+      });
+  }, [setItemData]);
+
+
+
+
+
   return (
     <>
         <SearchBar />
       <ScrollView>
         <View style={styles.container}>
-          {itemsArray.map((i) => {
+          {itemData.map((i) => {
             return (
               <Card key={i.itemid}>
                 <Card.Title>{i.itemname}</Card.Title>
