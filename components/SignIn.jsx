@@ -7,6 +7,7 @@ import axios from "axios";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [wantsToSignUp, setWantsToSignUp] = useState(false);
   function sendLogin(email, password) {
     return axios
       .post(`https://revive.com/api/login`, {
@@ -20,7 +21,9 @@ const SignIn = () => {
         console.log(err);
       });
   }
-
+  function signUpPress() {
+    setWantsToSignUp(true);
+  }
   return (
     <View>
       <Text h2>Sign In</Text>
@@ -36,9 +39,11 @@ const SignIn = () => {
         defaultValue={password}
       />
 
-    <Button color="green" title="Log In">Log In  </Button> 
+      <Button color="green" title="Log In">
+        Log In{" "}
+      </Button>
       <Text style={stylesignin.ortext}>or</Text>
-      <Button color="green" title="Create An Account" />
+      <Button onPress={signUpPress()} color="green" title="Create An Account" />
     </View>
   );
 };
@@ -48,13 +53,11 @@ const stylesignin = StyleSheet.create({
   ortext: {
     color: "black",
     marginTop: 30,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 20,
-    marginBottom: 36
+    marginBottom: 36,
   },
   loginbutton: {
     backgroundColor: "black",
-  
-  }
+  },
 });
-
