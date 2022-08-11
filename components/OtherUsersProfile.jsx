@@ -13,10 +13,10 @@ import Cards from "./ItemList";
 
 const OtherUsersProfile = ({ navigation, route }) => {
   const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [userData, setUserData] = useState(null);
-  const { itemOwnerID } = route.params;
+
 
   const fetchItems = async () => {
     try {
@@ -101,7 +101,7 @@ const OtherUsersProfile = ({ navigation, route }) => {
               : "https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg",
           }}
         />
-        <Text>{itemOwnerID}</Text>
+        
         <Text style={styles.userName}>
           {userData ? userData.fname || "Rosemary" : "Rosemary"}{" "}
           {userData ? userData.lname || "Smith" : "Smith"}
@@ -129,16 +129,11 @@ const OtherUsersProfile = ({ navigation, route }) => {
             </>
           ) : (
             <>
-              <TouchableOpacity
-                style={styles.userBtn}
-                onPress={() => {
-                  navigation.navigate("EditProfile");
-                }}
-              >
-                <Text style={styles.userBtnTxt}>Edit</Text>
-              </TouchableOpacity>
+             
+
+       
               <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
-                <Text style={styles.userBtnTxt}>Logout</Text>
+      
                 <Text style={styles.userBtnTxt}>Message</Text>
               </TouchableOpacity>
             </>
