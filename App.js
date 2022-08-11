@@ -1,4 +1,5 @@
 import { StatusBar } from "expo-status-bar";
+import React, { useState, useEffect } from "react";
 import {
   DatePickerAndroid,
   StyleSheet,
@@ -18,11 +19,33 @@ import MyMap from "./components/MapView";
 import * as SplashScreen from "expo-splash-screen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
-import AllItems from "./components/AllItems";
+
 import ListItem from "./components/ListItem";
 import SignIn from "./components/SignIn";
 import EditUsername from "./components/EditProfile";
 function DetailsScreen() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [itemData, setItemData] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(`https://revive-be.herokuapp.com/items/`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((items) => {
+        setItemData(() => {
+          return items;
+        });
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError({ err });
+      });
+  }, [setItemData]);
+
   return (
     <View
       style={{
