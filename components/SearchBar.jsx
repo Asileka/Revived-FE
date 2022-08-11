@@ -70,19 +70,19 @@ const styles = StyleSheet.create({
 
   },
   searchBar__unclicked: {
-    padding: 15,
+    padding: 8,
     flexDirection: "row",
-    marginTop: 20,
+    marginTop: 1,
     width: "95%",
     backgroundColor: "#d9dbda",
     borderRadius: 15,
     alignItems: "center",
   },
   searchBar__clicked: {
-    padding: 15,
+    padding: 8,
     flexDirection: "row",
     width: "80%",
-    marginTop: 20,
+    marginTop: 1,
 
     backgroundColor: "#d9dbda",
     borderRadius: 15,

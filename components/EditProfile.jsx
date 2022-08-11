@@ -14,11 +14,16 @@ import { SafeAreaView, TextInput } from "react-native";
 
 import { useState, useEffect } from "react";
 
-const ListItem = ({ navigation, route }) => {
+const EditUsername = ({ navigation, route }) => {
   const [text1, onChangeText1] = React.useState("");
   const [text2, onChangeText2] = React.useState("");
   const [text3, onChangeText3] = React.useState("");
   const [text4, onChangeText4] = React.useState("");
+
+  const [username, setUsername] = useState('');
+  const [err, setErr] = useState("");
+
+
 
   const [number4, onChangeNumber4] = React.useState(null);
   const Drawer = createDrawerNavigator();
@@ -32,36 +37,34 @@ const ListItem = ({ navigation, route }) => {
  
 
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+ 
+
+  const HandleChangeUsername = () => {
     setIsLoading(true);
-    setError(null);
-    fetch(
-      `https://revive-be.herokuapp.com/items`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          itemname: `${text1}`,
-          itemlocation: `${text2}`,
-          itemcategory: `${text3}`,
-          itemowner:  'blank',
-        claimed: 'blank',
-          itemimgurl: `${text4}`,
-         
-         
-        }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((json) =>
-        setItemData((currData) => [json.itemcategory, ...currData])
-      ).catch((err) => {
-      setItemData("");
-      setError("Something went wrong, please try again.");
-    });
+ 
+    setErr(null);
+    fetch(`https://revive-be.herokuapp.com/users/62f22cae71df4420fddf2cbc`, {
+      method: "PATCH",
+      body: JSON.stringify({
+    
+        name: 'John',
+
+       
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => 
+      response.json())
+      .then((json) => {
+      
+        setIsLoading(false);
+      })
+      .catch((err) => {
+
+        setErr("Something went wrong, please try again.");
+      });
   };
 
   
@@ -71,35 +74,17 @@ const ListItem = ({ navigation, route }) => {
         style={styles.input1}
         onChangeText1={onChangeText1}
         value={onChangeText1}
-        placeholder="Item Name"
+        placeholder=" Enter A New Username"
         keyboardType="text"
       />
-      <TextInput
-        style={styles.input2}
-        onChangeText2={onChangeText2}
-        value={onChangeText2}
-        placeholder="Location"
-        keyboardType="text"
-      />
-      <TextInput
-        style={styles.input3}
-        onChangeText3={onChangeText3}
-        value={onChangeText3}
-        placeholder="Category"
-        keyboardType="text"
-      />
-        <TextInput
-        style={styles.input4}
-        onChangeText3={onChangeText4}
-        value={onChangeText4}
-        placeholder="Enter IMG URL"
-        keyboardType="text"
-      />
+
+      
+     
 
     
 
-      <TouchableOpacity style={styles.userBtn} onPress={handleSubmit}>
-        <Text style={styles.userBtnTxt}>List It!</Text>
+      <TouchableOpacity style={styles.userBtn} onPress={HandleChangeUsername}>
+        <Text style={styles.userBtnTxt}>Save</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -144,4 +129,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListItem;
+export default EditUsername;

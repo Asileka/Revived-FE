@@ -4,7 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text, Card, Button, Icon } from "@rneui/themed";
 import { NavigationContainer } from "@react-navigation/native";
 
-
+import SearchBar from './SearchBar';
  export const itemsArray = [
 
   {
@@ -37,6 +37,7 @@ import { NavigationContainer } from "@react-navigation/native";
 const Cards = ({ navigation }) => {
   return (
     <>
+        <SearchBar />
       <ScrollView>
         <View style={styles.container}>
           {itemsArray.map((i) => {

@@ -21,6 +21,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import AllItems from "./components/AllItems";
 import ListItem from "./components/ListItem";
 import SignIn from "./components/SignIn";
+import EditUsername from "./components/EditProfile";
 function DetailsScreen() {
   return (
     <View
@@ -54,7 +55,6 @@ function MainItemsPage({ navigation }) {
 function App() {
   return (
     <NavigationContainer>
-      <SearchBar />
       <Drawer.Navigator
         id="1"
         screenOptions={{
@@ -80,6 +80,12 @@ function App() {
         <Drawer.Screen name="Inbox" component={DetailsScreen} />
         <Drawer.Screen name="Categories" component={DetailsScreen} />
         <Drawer.Screen name="Favourites" component={DetailsScreen} />
+        <Drawer.Screen name="Edit Profile" component={EditUsername} />
+        <Drawer.Screen
+          name="Other Users Profile"
+          component={OtherUsersProfile}
+        />
+
         <Drawer.Screen name="Map" component={MyMap} />
         <Drawer.Screen name="Terms" component={DetailsScreen} />
         <Drawer.Screen name="Sign In" component={SignIn} />
