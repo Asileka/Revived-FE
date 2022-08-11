@@ -42,6 +42,7 @@ const Drawer = createDrawerNavigator();
 
 const Stack = createStackNavigator();
 const EditNav = createStackNavigator();
+
 function MainItemsPage({ navigation }) {
   return (
     <Stack.Navigator>
@@ -84,8 +85,9 @@ function App() {
           name="Other Users Profile"
           component={OtherUsersProfile}
         />
+
         <Drawer.Screen name="Map" component={MyMap} />
-        <Drawer.Screen name="Terms" component={Terms} />
+        <Drawer.Screen name="Terms" component={DetailsScreen} />
         <Drawer.Screen name="Sign In" component={SignIn} />
         <Drawer.Screen name="Log Out" component={DetailsScreen} />
       </Drawer.Navigator>
