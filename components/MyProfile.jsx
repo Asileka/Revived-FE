@@ -21,7 +21,7 @@ const MyProfile = ({navigation, route}) => {
   const [deleted, setDeleted] = useState(false);
   const [userData, setUserData] = useState('');
   const [allUsers, setAllUsers] = useState('');
-
+  const [itemData, setItemData] = useState([]);
 
 
   useEffect(() => {
@@ -64,6 +64,26 @@ const MyProfile = ({navigation, route}) => {
         setError({ err });
       });
   }, [setUserData]);
+
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(`https://revive-be.herokuapp.com/items/`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((items) => {
+  
+        setItemData(() => {
+          return items;
+        });
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError({ err });
+      });
+  }, [setItemData]);
 
  
 
@@ -140,7 +160,7 @@ const MyProfile = ({navigation, route}) => {
 
            { //////// ITEM LIST
              }
-       <MyItemCards/>
+       <MyItemCards itemData={itemData}/>
      
       </ScrollView>
     </SafeAreaView>
