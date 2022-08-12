@@ -1,29 +1,27 @@
 import * as React from "react";
 
-
-
-import {useState, useEffect} from 'react';
-import { View, ScrollView, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useState, useEffect } from "react";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text, Card, Button, Icon } from "@rneui/themed";
+import axios from "axios";
 
 const MyItemCards = () => {
-
   const [items, setItems] = useState([]);
-    const [itemData, setItemData] = useState([]);
+  const [itemData, setItemData] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
-  
-
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`https://revive-be.herokuapp.com/items/`)
-      .then((response) => {
-        return response.json();
-      })
+    fetch(`https://revive-be.herokuapp.com/api/items/`)
       .then((items) => {
-  
         setItemData(() => {
           return items;
         });
@@ -31,34 +29,19 @@ const MyItemCards = () => {
       })
       .catch((err) => {
         console.log(err);
-        setError({ err });
       });
-  }, [setItemData]);
-
-
-
-  
-
-
-
-
-
+  }, []);
 
   const handleDelete = (event) => {
     event.preventDefault();
     setIsLoading(true);
-    setErr(null);
-    fetch(`https://revive-be.herokuapp.com/items/62f4d4c15866dad7a0451d68`, {
+    fetch(`https://revive-be.herokuapp.com/api/items/${itemData._id}`, {
       method: "DELETE",
     }).then(() => {
-      setItemData((curr) => {
-
-        return itemData
-      });
+      console.log(`deleted ${itemData._id}`);
       setIsLoading(false);
     });
   };
-
 
   return (
     <>
@@ -66,7 +49,7 @@ const MyItemCards = () => {
         <View style={styles.container}>
           {itemData.map((i) => {
             return (
-              <Card key={i.itemid}>
+              <Card key={i._id}>
                 <Card.Title>{i.itemname}</Card.Title>
                 <Card.Divider />
                 <Card.Image
@@ -82,9 +65,8 @@ const MyItemCards = () => {
                 <Text style={{ marginBottom: 10 }}>Item Description</Text>
 
                 <TouchableOpacity style={styles.userBtn} onPress={handleDelete}>
-        <Text style={styles.userBtnTxt}>Delete Item</Text>
-      </TouchableOpacity>
-           
+                  <Text style={styles.userBtnTxt}>Delete Item</Text>
+                </TouchableOpacity>
               </Card>
             );
           })}
@@ -105,7 +87,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: 6,
   },
-   userBtn: {
+  userBtn: {
     borderColor: "green",
     borderWidth: 2,
     borderRadius: 3,

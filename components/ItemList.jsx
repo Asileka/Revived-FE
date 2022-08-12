@@ -15,7 +15,7 @@ const Cards = ({ navigation }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`https://revive-be.herokuapp.com/items/`)
+    fetch(`https://revive-be.herokuapp.com/api/items/`)
       .then((response) => {
         return response.json();
       })
@@ -59,18 +59,6 @@ const Cards = ({ navigation }) => {
                 >
                   Owner: {i.itemowner}
                 </Text>
-                {/* <Button
-                  title="Contact Owner"
-                  onPress={() => navigation.navigate("Profile")}
-                  buttonStyle={{
-                    borderRadius: 0,
-                    backgroundColor: "#0d8575",
-                    marginLeft: 0,
-                    marginRight: 0,
-                    marginBottom: 0,
-                  }}
-                /> */}
-
                 <Text>Added: {i.itemcreateddate}</Text>
                 <Text style={{ marginBottom: 10 }}>Item Description</Text>
                 <Button

@@ -9,94 +9,71 @@ import {
 
 import { Text, Card, Button, Icon } from "@rneui/themed";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-
 import { SafeAreaView, TextInput } from "react-native";
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { userContext } from "./Contexts";
 
 const ListItem = ({ navigation, route }) => {
-  const [text1, onChangeText1] = React.useState("");
-  const [text2, onChangeText2] = React.useState("");
-  const [text3, onChangeText3] = React.useState("");
-  const [text4, onChangeText4] = React.useState("");
-
-  const [number4, onChangeNumber4] = React.useState(null);
-  const Drawer = createDrawerNavigator();
+  const { loggedUserID, setLoggedUserID } = useContext(userContext);
+  // const [text1, onChangeText1] = React.useState("");
+  // const [text2, onChangeText2] = React.useState("");
+  // const [text3, onChangeText3] = React.useState("");
+  // const [text4, onChangeText4] = React.useState("");
+  const [itemName, setItemName] = useState("Black Dress");
+  const [itemPostcode, setItemPostcode] = useState("M163JD");
+  const [itemCategory, setItemCategory] = useState("clothing");
   const [newItem, setNewItem] = useState("");
   const [itemData, setItemData] = useState([]);
-
   const [isLoading, setIsLoading] = useState(false);
-
   const [error, setError] = useState(null);
-
- 
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsLoading(true);
     setError(null);
-    fetch(
-      `https://revive-be.herokuapp.com/items`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          itemname: `${text1}`,
-          itemlocation: `${text2}`,
-          itemcategory: `${text3}`,
-          itemowner:  'blank',
-        claimed: 'blank',
-          itemimgurl: `${text4}`,
-         
-         
-        }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((json) =>
-        setItemData((currData) => [json.itemcategory, ...currData])
-      ).catch((err) => {
-      setItemData("");
-      setError("Something went wrong, please try again.");
-    });
+    fetch(`https://revive-be.herokuapp.com/api/items`, {
+      method: "POST",
+      body: JSON.stringify({
+        itemname: itemName,
+        itemlocation: itemPostcode,
+        itemcategory: itemCategory,
+        itemownerid: loggedUserID,
+        itemowner: "Adam J",
+        claimed: "available",
+        itemimgurl: `https://cdn.luxe.digital/media/2021/02/24170750/best-little-black-dresses-grace-karin-review-luxe-digital%402x.jpg`,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => console.log(response.data))
+      .catch((err) => {
+        setItemData("");
+        setError("Something went wrong, please try again.");
+      });
   };
 
-  
   return (
     <SafeAreaView>
       <TextInput
         style={styles.input1}
-        onChangeText1={onChangeText1}
-        value={onChangeText1}
+        onChangeText={(newItemName) => setItemName(newItemName)}
+        defaultValue={itemName}
         placeholder="Item Name"
         keyboardType="text"
       />
       <TextInput
         style={styles.input2}
-        onChangeText2={onChangeText2}
-        value={onChangeText2}
-        placeholder="Location"
+        onChangeText={(newItemPostcode) => setItemPostcode(newItemPostcode)}
+        defaultValue={itemPostcode}
+        placeholder="Postcode"
         keyboardType="text"
       />
       <TextInput
         style={styles.input3}
-        onChangeText3={onChangeText3}
-        value={onChangeText3}
         placeholder="Category"
         keyboardType="text"
       />
-        <TextInput
-        style={styles.input4}
-        onChangeText3={onChangeText4}
-        value={onChangeText4}
-        placeholder="Enter IMG URL"
-        keyboardType="text"
-      />
-
-    
 
       <TouchableOpacity style={styles.userBtn} onPress={handleSubmit}>
         <Text style={styles.userBtnTxt}>List It!</Text>

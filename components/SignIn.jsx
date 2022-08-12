@@ -2,6 +2,7 @@ import { Text, Input, Button, Divider } from "@rneui/themed";
 import { useState, createContext, useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { userContext } from "./Contexts";
 import axios from "axios";
 
 const SignIn = () => {
@@ -13,6 +14,7 @@ const SignIn = () => {
   const [disableRegister, setDisableRegister] = useState(false);
   const [disableLogin, setDisableLogin] = useState(false);
   const [currentUserID, setCurrentUserID] = useState("1");
+  const { loggedUserID, setLoggedUserID } = useContext(userContext);
 
   function sendLogin() {
     return axios
@@ -23,10 +25,12 @@ const SignIn = () => {
       .then((res) => {
         setSuccess("Success!");
         setDisableLogin(true);
-        setCurrentUserID(res.data._id);
+        setLoggedUserID("1");
+        console.log(res.data);
         return res.status;
       })
       .catch((err) => {
+        setLoggedUserID("1");
         console.log(err);
       });
   }
@@ -68,7 +72,7 @@ const SignIn = () => {
           defaultValue={password}
         />
         <Text h2>{success}</Text>
-        <Text h2>{currentUserID}</Text>
+        <Text h2>{loggedUserID}</Text>
         <Button
           onPress={sendLogin}
           disabled={disableLogin}
