@@ -10,17 +10,19 @@ import {
 } from "react-native";
 
 import MyItemCards from "./MyItems";
+import { userContext } from "./Contexts";
 
 const MyProfile = ({ navigation, route }) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [deleted, setDeleted] = useState(false);
-  const [userData, setUserData] = useState("");
+  const [userData, setUserData] = useState(null);
   const [itemData, setItemData] = useState([]);
+  const { loggedUserID, setLoggedUserID } = useContext(userContext);
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`https://revive-be.herokuapp.com/users/62f22cae71df4420fddf2cbc`)
+    fetch(`https://revive-be.herokuapp.com/api/users/${loggedUserID}`)
       .then((response) => {
         return response.json();
       })
@@ -36,23 +38,23 @@ const MyProfile = ({ navigation, route }) => {
       });
   }, [setUserData]);
 
-  useEffect(() => {
-    setIsLoading(true);
-    fetch(`https://revive-be.herokuapp.com/items/`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((items) => {
-        setItemData(() => {
-          return items;
-        });
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setError({ err });
-      });
-  }, [setItemData]);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   fetch(`https://revive-be.herokuapp.com/api/items/`)
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then((items) => {
+  //       setItemData(() => {
+  //         return items;
+  //       });
+  //       setIsLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       setError({ err });
+  //     });
+  // }, [setItemData]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -75,41 +77,18 @@ const MyProfile = ({ navigation, route }) => {
         />
         <Text style={styles.userName}>{userData.name || ""} </Text>
 
-        <Text style={styles.aboutUser}>
-          {userData
-            ? userData.about || "No details added."
-            : "No details added"}
-        </Text>
-        <Text style={styles.aboutUser}>
-          {userData
-            ? userData.about || "Chosen Charity: CHARITY"
-            : "Chosen Charity: CHARITY"}
-        </Text>
+        <Text style={styles.aboutUser}>Chosen Charity: {userData.charity}</Text>
         <View style={styles.userBtnWrapper}>
-          {route.params ? (
-            <>
-              <TouchableOpacity style={styles.userBtn} onPress={() => {}}>
-                <Text style={styles.userBtnTxt}>Message</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.userBtn} onPress={() => {}}>
-                <Text style={styles.userBtnTxt}>Follow</Text>
-              </TouchableOpacity>
-            </>
-          ) : (
-            <>
-              <TouchableOpacity
-                style={styles.userBtn}
-                onPress={() => {
-                  navigation.navigate("EditProfile");
-                }}
-              >
-                <Text style={styles.userBtnTxt}>Edit</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
-                <Text style={styles.userBtnTxt}>Logout</Text>
-              </TouchableOpacity>
-            </>
-          )}
+          <>
+            <TouchableOpacity
+              style={styles.userBtn}
+              onPress={() => {
+                navigation.navigate("EditProfile");
+              }}
+            >
+              <Text style={styles.userBtnTxt}>Edit</Text>
+            </TouchableOpacity>
+          </>
         </View>
 
         <View style={styles.userInfoWrapper}>
@@ -122,7 +101,7 @@ const MyProfile = ({ navigation, route }) => {
             <Text style={styles.userInfoSubTitle}>Items Donated</Text>
           </View>
         </View>
-        <MyItemCards itemData={itemData} />
+        {/* <MyItemCards itemData={itemData} /> */}
       </ScrollView>
     </SafeAreaView>
   );

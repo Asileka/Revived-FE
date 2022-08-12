@@ -17,6 +17,7 @@ import MyItemCards from "./components/MyItems";
 import ListItem from "./components/ListItem";
 import SignIn from "./components/SignIn";
 import EditUsername from "./components/EditProfile";
+import SignOut from "./components/SignOut";
 import { userContext } from "./components/Contexts";
 
 function DetailsScreen() {
@@ -94,7 +95,7 @@ function App() {
               <Drawer.Screen name="Map" component={MyMap} />
               <Drawer.Screen name="Terms" component={DetailsScreen} />
 
-              <Drawer.Screen name="Log Out" component={DetailsScreen} />
+              <Drawer.Screen name="Sign Out" component={SignOut} />
             </>
           ) : (
             <>

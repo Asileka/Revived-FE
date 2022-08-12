@@ -25,12 +25,11 @@ const SignIn = () => {
       .then((res) => {
         setSuccess("Success!");
         setDisableLogin(true);
-        setLoggedUserID("1");
+        setLoggedUserID(res.data);
         console.log(res.data);
         return res.status;
       })
       .catch((err) => {
-        setLoggedUserID("1");
         console.log(err);
       });
   }
