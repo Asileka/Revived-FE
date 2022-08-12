@@ -3,7 +3,7 @@ import { useState, createContext, useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import axios from "axios";
-import { userContext } from "./components/Contexts";
+
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,6 +12,7 @@ const SignIn = () => {
   const [success, setSuccess] = useState("");
   const [disableRegister, setDisableRegister] = useState(false);
   const [disableLogin, setDisableLogin] = useState(false);
+  const [currentUserID, setCurrentUserID] = useState("1");
 
   function sendLogin() {
     return axios
@@ -67,6 +68,7 @@ const SignIn = () => {
           defaultValue={password}
         />
         <Text h2>{success}</Text>
+        <Text h2>{currentUserID}</Text>
         <Button
           onPress={sendLogin}
           disabled={disableLogin}
