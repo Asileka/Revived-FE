@@ -12,13 +12,10 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { SafeAreaView, TextInput } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import { userContext } from "./Contexts";
+import * as ImagePicker from "expo-image-picker";
 
 const ListItem = ({ navigation, route }) => {
   const { loggedUserID, setLoggedUserID } = useContext(userContext);
-  // const [text1, onChangeText1] = React.useState("");
-  // const [text2, onChangeText2] = React.useState("");
-  // const [text3, onChangeText3] = React.useState("");
-  // const [text4, onChangeText4] = React.useState("");
   const [itemName, setItemName] = useState("Black Dress");
   const [itemPostcode, setItemPostcode] = useState("M163JD");
   const [itemCategory, setItemCategory] = useState("clothing");
@@ -26,24 +23,41 @@ const ListItem = ({ navigation, route }) => {
   const [itemData, setItemData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsLoading(true);
     setError(null);
+    let formData = FormData();
+
+    formData.append("itemname", itemName);
+    formData.append("itemlocation", itemPostcode);
+    formData.append("itemownerid", loggedUserID);
+    formData.append("claimed", loggedUserID);
+    formData.append("itemimage");
+
     fetch(`https://revive-be.herokuapp.com/api/items`, {
       method: "POST",
-      body: JSON.stringify({
-        itemname: itemName,
-        itemlocation: itemPostcode,
-        itemcategory: itemCategory,
-        itemownerid: loggedUserID,
-        itemowner: "Adam J",
-        claimed: "available",
-        itemimgurl: `https://cdn.luxe.digital/media/2021/02/24170750/best-little-black-dresses-grace-karin-review-luxe-digital%402x.jpg`,
-      }),
+      body: formData,
       headers: {
-        "Content-type": "application/json; charset=UTF-8",
+        "Content-Type": "multipart/form-data",
       },
     })
       .then((response) => console.log(response.data))
@@ -60,21 +74,18 @@ const ListItem = ({ navigation, route }) => {
         onChangeText={(newItemName) => setItemName(newItemName)}
         defaultValue={itemName}
         placeholder="Item Name"
-        keyboardType="text"
       />
       <TextInput
         style={styles.input2}
         onChangeText={(newItemPostcode) => setItemPostcode(newItemPostcode)}
         defaultValue={itemPostcode}
         placeholder="Postcode"
-        keyboardType="text"
       />
-      <TextInput
-        style={styles.input3}
-        placeholder="Category"
-        keyboardType="text"
-      />
-
+      <TextInput style={styles.input3} placeholder="Category" />
+      <Button title="Pick an image from camera roll" onPress={pickImage} />
+      {image && (
+        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+      )}
       <TouchableOpacity style={styles.userBtn} onPress={handleSubmit}>
         <Text style={styles.userBtnTxt}>List It!</Text>
       </TouchableOpacity>
