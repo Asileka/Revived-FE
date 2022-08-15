@@ -16,14 +16,15 @@ import * as ImagePicker from "expo-image-picker";
 
 const ListItem = ({ navigation, route }) => {
   const { loggedUserID, setLoggedUserID } = useContext(userContext);
-  const [itemName, setItemName] = useState("Black Dress");
-  const [itemPostcode, setItemPostcode] = useState("M163JD");
-  const [itemCategory, setItemCategory] = useState("clothing");
+  const [itemName, setItemName] = useState("");
+  const [itemPostcode, setItemPostcode] = useState("");
+  const [itemCategory, setItemCategory] = useState("");
   const [newItem, setNewItem] = useState("");
   const [itemData, setItemData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [image, setImage] = useState(null);
+  const [disableButton, setDisableButtun] = useState(false);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -45,22 +46,27 @@ const ListItem = ({ navigation, route }) => {
     event.preventDefault();
     setIsLoading(true);
     setError(null);
-    let formData = FormData();
+    setDisableButtun(true);
+    let formData = new FormData();
 
     formData.append("itemname", itemName);
     formData.append("itemlocation", itemPostcode);
     formData.append("itemownerid", loggedUserID);
-    formData.append("claimed", loggedUserID);
-    formData.append("itemimage");
+    formData.append("itemcategory", itemCategory);
+    formData.append("itemimage", {
+      uri: image,
+      name: "itemimage",
+      type: "image/jpeg",
+    });
 
-    fetch(`https://revive-be.herokuapp.com/api/items`, {
+    fetch(`https://revive-be.herokuapp.com/api/users/${loggedUserID}/items`, {
       method: "POST",
       body: formData,
       headers: {
         "Content-Type": "multipart/form-data",
       },
     })
-      .then((response) => console.log(response.data))
+      .then((response) => console.log(response))
       .catch((err) => {
         setItemData("");
         setError("Something went wrong, please try again.");
@@ -81,12 +87,21 @@ const ListItem = ({ navigation, route }) => {
         defaultValue={itemPostcode}
         placeholder="Postcode"
       />
-      <TextInput style={styles.input3} placeholder="Category" />
+      <TextInput
+        style={styles.input3}
+        onChangeText={(newItemCategory) => setItemCategory(newItemCategory)}
+        defaultValue={itemCategory}
+        placeholder="Category"
+      />
       <Button title="Pick an image from camera roll" onPress={pickImage} />
       {image && (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
-      <TouchableOpacity style={styles.userBtn} onPress={handleSubmit}>
+      <TouchableOpacity
+        style={styles.userBtn}
+        disabled={disableButton}
+        onPress={handleSubmit}
+      >
         <Text style={styles.userBtnTxt}>List It!</Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -129,6 +144,9 @@ const styles = StyleSheet.create({
   },
   userBtnTxt: {
     color: "black",
+  },
+  disabledButton: {
+    color: "#abc7ac",
   },
 });
 
