@@ -13,6 +13,7 @@ import { SafeAreaView, TextInput } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import { userContext } from "./Contexts";
 import * as ImagePicker from "expo-image-picker";
+import { Picker } from "@react-native-picker/picker";
 
 const ListItem = ({ navigation, route }) => {
   const { loggedUserID, setLoggedUserID } = useContext(userContext);
@@ -91,18 +92,23 @@ const ListItem = ({ navigation, route }) => {
       />
       <TextInput
         style={styles.input3}
-        onChangeText={(newItemCategory) => setItemCategory(newItemCategory)}
-        defaultValue={itemCategory}
-        placeholder="Category"
-      />
-      <TextInput
-        style={styles.input3}
         onChangeText={(newItemDescription) =>
           setItemDescription(newItemDescription)
         }
         defaultValue={itemDescription}
         placeholder="Describe your item"
       />
+      <Text>Pick item category:</Text>
+      <Picker
+        selectedValue={itemCategory}
+        onValueChange={(itemValue) => setItemCategory(itemValue)}
+      >
+        <Picker.Item label="Clothing" value="clothing" />
+        <Picker.Item label="Books" value="books" />
+        <Picker.Item label="Games" value="games" />
+        <Picker.Item label="Electronics" value="electronics" />
+      </Picker>
+
       <Button title="Pick an image from camera roll" onPress={pickImage} />
       {image && (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
