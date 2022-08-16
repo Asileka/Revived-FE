@@ -9,78 +9,34 @@ import {
   SafeAreaView,
 } from "react-native";
 
-import Cards from "./ItemList";
+import { userContext } from "./Contexts";
 
 const OtherUsersProfile = ({ navigation, route }) => {
   const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [deleted, setDeleted] = useState(false);
-  const [userData, setUserData] = useState(null);
-
-
-  const fetchItems = async () => {
-    try {
-      const list = [];
-
-      await firestore()
-        .collection("items")
-        .where("userId", "==", route.params ? route.params.userId : user.uid)
-        .orderBy("postTime", "desc")
-        .get()
-        .then((querySnapshot) => {
-          // console.log('Total Posts: ', querySnapshot.size);
-
-          querySnapshot.forEach((doc) => {
-            const { userId, post, postImg, postTime, likes, comments } =
-              doc.data();
-            list.push({
-              id: doc.id,
-              userId,
-              userName: "Test Name",
-              userImg:
-                "https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg",
-              postTime: postTime,
-              post,
-              postImg,
-              liked: false,
-              likes,
-              comments,
-            });
-          });
-        });
-
-      setItems(list);
-
-      if (loading) {
-        setLoading(false);
-      }
-
-      console.log("Items: ", items);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getUser = async () => {
-    await firestore()
-      .collection("users")
-      .doc(route.params ? route.params.userId : user.uid)
-      .get()
-      .then((documentSnapshot) => {
-        if (documentSnapshot.exists) {
-          console.log("User Data", documentSnapshot.data());
-          setUserData(documentSnapshot.data());
-        }
-      });
-  };
+  const [userData, setUserData] = useState("");
+  const [itemData, setItemData] = useState([]);
+  const { loggedUserID, setLoggedUserID } = useContext(userContext);
+  const { itemOwnerID } = route.params;
 
   useEffect(() => {
-    getUser();
-    fetchItems();
-    navigation.addListener("focus", () => setLoading(!loading));
-  }, [navigation, loading]);
-
-  const handleDelete = () => {};
+    setIsLoading(true);
+    fetch(`https://revive-be.herokuapp.com/api/users/${itemOwnerID}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setUserData(() => {
+          return data;
+        });
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError({ err });
+      });
+  }, [setUserData]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -95,70 +51,21 @@ const OtherUsersProfile = ({ navigation, route }) => {
         <Image
           style={styles.userImg}
           source={{
-            uri: userData
-              ? userData.userImg ||
-                "https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg"
-              : "https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg",
+            uri:
+              userData.avatar ||
+              "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
           }}
         />
-        
-        <Text style={styles.userName}>
-          {userData ? userData.fname || "Rosemary" : "Rosemary"}{" "}
-          {userData ? userData.lname || "Smith" : "Smith"}
-        </Text>
-        {/* <Text>{route.params ? route.params.userId : user.uid}</Text> */}
-        <Text style={styles.aboutUser}>
-          {userData
-            ? userData.about || "No details added."
-            : "No details added"}
-        </Text>
-        <Text style={styles.aboutUser}>
-          {userData
-            ? userData.about || "Chosen Charity: CHARITY"
-            : "Chosen Charity: CHARITY"}
-        </Text>
-        <View style={styles.userBtnWrapper}>
-          {route.params ? (
-            <>
-              <TouchableOpacity style={styles.userBtn} onPress={() => {}}>
-                <Text style={styles.userBtnTxt}>Message</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.userBtn} onPress={() => {}}>
-                <Text style={styles.userBtnTxt}>Follow</Text>
-              </TouchableOpacity>
-            </>
-          ) : (
-            <>
-             
+        <Text style={styles.userName}>{userData.name || ""} </Text>
 
-       
-              <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
-      
-                <Text style={styles.userBtnTxt}>Message</Text>
-              </TouchableOpacity>
-            </>
-          )}
-        </View>
-
+        <Text style={styles.aboutUser}>Chosen Charity: {userData.charity}</Text>
+        <View style={styles.userBtnWrapper}></View>
         <View style={styles.userInfoWrapper}>
           <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>{items.length}</Text>
-            <Text style={styles.userInfoSubTitle}>Items Available</Text>
-          </View>
-          <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>{items.length}</Text>
-            <Text style={styles.userInfoSubTitle}>Items Donated</Text>
+            {/* <Text style={styles.userInfoTitle}>{userData.items.length}</Text> */}
+            <Text style={styles.userInfoSubTitle}>Total items</Text>
           </View>
         </View>
-
-        {items.map((item) => (
-          <PostCard key={item.id} item={item} onDelete={handleDelete} />
-        ))}
-
-        {
-          //////// ITEM LIST
-        }
-        <Cards />
       </ScrollView>
     </SafeAreaView>
   );

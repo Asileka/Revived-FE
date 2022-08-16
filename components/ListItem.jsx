@@ -19,6 +19,7 @@ const ListItem = ({ navigation, route }) => {
   const [itemName, setItemName] = useState("");
   const [itemPostcode, setItemPostcode] = useState("");
   const [itemCategory, setItemCategory] = useState("");
+  const [itemDescription, setItemDescription] = useState("");
   const [newItem, setNewItem] = useState("");
   const [itemData, setItemData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -53,6 +54,7 @@ const ListItem = ({ navigation, route }) => {
     formData.append("itemlocation", itemPostcode);
     formData.append("itemownerid", loggedUserID);
     formData.append("itemcategory", itemCategory);
+    formData.append("itemdescription", itemDescription);
     formData.append("itemimage", {
       uri: image,
       name: "itemimage",
@@ -92,6 +94,14 @@ const ListItem = ({ navigation, route }) => {
         onChangeText={(newItemCategory) => setItemCategory(newItemCategory)}
         defaultValue={itemCategory}
         placeholder="Category"
+      />
+      <TextInput
+        style={styles.input3}
+        onChangeText={(newItemDescription) =>
+          setItemDescription(newItemDescription)
+        }
+        defaultValue={itemDescription}
+        placeholder="Describe your item"
       />
       <Button title="Pick an image from camera roll" onPress={pickImage} />
       {image && (

@@ -60,7 +60,10 @@ const Cards = ({ navigation }) => {
                   Owner: {i.itemowner}
                 </Text>
                 <Text>Added: {i.itemcreateddate}</Text>
-                <Text style={{ marginBottom: 10 }}>Item Description</Text>
+                <Text>{i.claimed ? "Claimed" : "Available"}</Text>
+                <Text style={{ marginBottom: 10 }}>
+                  Description: {i.itemdescription}
+                </Text>
                 <Button
                   color="#f24646"
                   size="sm"
@@ -114,7 +117,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   link: {
-    color: "#000000",
+    color: "#3993bd",
 
     textDecorationLine: "underline",
   },

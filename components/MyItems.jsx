@@ -1,36 +1,60 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+
+import { useState, useEffect, useContext } from "react";
+import { View, ScrollView, StyleSheet, Image } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text, Card, Button, Icon } from "@rneui/themed";
-import axios from "axios";
+import { NavigationContainer } from "@react-navigation/native";
+import { userContext } from "./Contexts";
+import SearchBar from "./SearchBar";
 
-const MyItemCards = () => {
+const MyItemCards = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [itemData, setItemData] = useState([]);
-
-  const [isLoading, setIsLoading] = useState(false);
+  const { loggedUserID, setLoggedUserID } = useContext(userContext);
+  const [changeClaimed, setChangeClaimed] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`https://revive-be.herokuapp.com/api/users/62f61d8a5236e2a49faffe9e`)
+    fetch(`https://revive-be.herokuapp.com/api/users/${loggedUserID}/items`)
+      .then((response) => {
+        return response.json();
+      })
       .then((items) => {
-        console.log(items.items);
-
+        setItemData(() => {
+          return items;
+        });
         setIsLoading(false);
       })
       .catch((err) => {
+        setError({ err });
+      });
+  }, [changeClaimed]);
+  const handleMarkAsClaimed = () => {
+    fetch(`https://revive-be.herokuapp.com/api/items/${itemData._id}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        claimed: true,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((json) => {
+        setIsLoading(false);
+        setChangeClaimed(true);
+        console.log("success");
+      })
+      .catch((err) => {
+        setErr("Something went wrong, please try again.");
         console.log(err);
       });
-  }, []);
+  };
 
   return (
     <>
+      <SearchBar />
       <ScrollView>
         <View style={styles.container}>
           {itemData.map((i) => {
@@ -46,9 +70,27 @@ const MyItemCards = () => {
                 />
                 <Text>Category: {i.itemcategory}</Text>
                 <Text>Location: {i.itemlocation}</Text>
-                <Text>Owner: {i.itemowner}</Text>
+                <Text>{i.claimed ? "Claimed" : "Available"}</Text>
                 <Text>Added: {i.itemcreateddate}</Text>
                 <Text style={{ marginBottom: 10 }}>Item Description</Text>
+                <Button
+                  onPress={handleMarkAsClaimed}
+                  icon={
+                    <Icon
+                      name="add"
+                      color="#ffffff"
+                      iconStyle={{ marginRight: 10 }}
+                    />
+                  }
+                  buttonStyle={{
+                    borderRadius: 0,
+                    backgroundColor: "#4287f5",
+                    marginLeft: 0,
+                    marginRight: 0,
+                    marginBottom: 0,
+                  }}
+                  title="Mark As Claimed"
+                />
               </Card>
             );
           })}
@@ -61,6 +103,7 @@ const MyItemCards = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#0d8575",
   },
   fonts: {
     marginBottom: 8,
@@ -68,18 +111,6 @@ const styles = StyleSheet.create({
   user: {
     flexDirection: "row",
     marginBottom: 6,
-  },
-  userBtn: {
-    borderColor: "green",
-    borderWidth: 2,
-    borderRadius: 3,
-    alignItems: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginHorizontal: 5,
-  },
-  userBtnTxt: {
-    color: "black",
   },
   image: {
     width: 30,
@@ -89,6 +120,11 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     marginTop: 5,
+  },
+  link: {
+    color: "#3993bd",
+
+    textDecorationLine: "underline",
   },
 });
 

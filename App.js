@@ -21,10 +21,6 @@ import SignOut from "./components/SignOut";
 import { userContext } from "./components/Contexts";
 
 function DetailsScreen() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [itemData, setItemData] = useState([]);
-
   return (
     <View
       style={{
@@ -34,6 +30,19 @@ function DetailsScreen() {
       }}
     >
       <Text>No new messages</Text>
+    </View>
+  );
+}
+function FavouriteScreen() {
+  return (
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Text>Favoutite items feature coming soon</Text>
     </View>
   );
 }
@@ -84,10 +93,9 @@ function App() {
               <Drawer.Screen name="List Item" component={ListItem} />
               <Drawer.Screen name="Inbox" component={DetailsScreen} />
               <Drawer.Screen name="My Items" component={MyItemCards} />
-              <Drawer.Screen name="Favourites" component={DetailsScreen} />
+              <Drawer.Screen name="Favourites" component={FavouriteScreen} />
               <Drawer.Screen name="Edit Profile" component={EditUsername} />
               <Drawer.Screen name="Map" component={MyMap} />
-              <Drawer.Screen name="Terms" component={DetailsScreen} />
               <Drawer.Screen name="Sign Out" component={SignOut} />
             </>
           ) : (

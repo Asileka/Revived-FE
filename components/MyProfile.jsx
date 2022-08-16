@@ -71,12 +71,12 @@ const MyProfile = ({ navigation, route }) => {
           </>
         </View>
 
-        <View style={styles.userInfoWrapper}>
+        {/* <View style={styles.userInfoWrapper}>
           <View style={styles.userInfoItem}>
             <Text style={styles.userInfoTitle}>{userData.items.length}</Text>
             <Text style={styles.userInfoSubTitle}>Total items</Text>
           </View>
-        </View>
+        </View> */}
       </ScrollView>
     </SafeAreaView>
   );
