@@ -1,11 +1,5 @@
 import * as React from "react";
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, ScrollView, StyleSheet, Image } from "react-native";
 
 import { Text, Card, Button, Icon } from "@rneui/themed";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -19,7 +13,7 @@ const ListItem = ({ navigation, route }) => {
   const { loggedUserID, setLoggedUserID } = useContext(userContext);
   const [itemName, setItemName] = useState("");
   const [itemPostcode, setItemPostcode] = useState("");
-  const [itemCategory, setItemCategory] = useState("");
+  const [itemCategory, setItemCategory] = useState("clothing");
   const [itemDescription, setItemDescription] = useState("");
   const [newItem, setNewItem] = useState("");
   const [itemData, setItemData] = useState([]);
@@ -27,6 +21,7 @@ const ListItem = ({ navigation, route }) => {
   const [error, setError] = useState(null);
   const [image, setImage] = useState(null);
   const [disableButton, setDisableButtun] = useState(false);
+  const [disableListAnother, setDisableListAnother] = useState(true);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -43,12 +38,21 @@ const ListItem = ({ navigation, route }) => {
       setImage(result.uri);
     }
   };
-
+  const handleListAnother = () => {
+    setDisableButtun(false);
+    setDisableListAnother(true);
+    setImage(null);
+    setItemCategory("");
+    setItemDescription("");
+    setItemPostcode("");
+    setItemName("");
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsLoading(true);
     setError(null);
     setDisableButtun(true);
+    setDisableListAnother(false);
     let formData = new FormData();
 
     formData.append("itemname", itemName);
@@ -69,7 +73,7 @@ const ListItem = ({ navigation, route }) => {
         "Content-Type": "multipart/form-data",
       },
     })
-      .then((response) => console.log(response))
+      .then((response) => console.log("posted"))
       .catch((err) => {
         setItemData("");
         setError("Something went wrong, please try again.");
@@ -103,23 +107,34 @@ const ListItem = ({ navigation, route }) => {
         selectedValue={itemCategory}
         onValueChange={(itemValue) => setItemCategory(itemValue)}
       >
+        <Picker.Item label="Pick a category" value="clothing" />
         <Picker.Item label="Clothing" value="clothing" />
         <Picker.Item label="Books" value="books" />
         <Picker.Item label="Games" value="games" />
         <Picker.Item label="Electronics" value="electronics" />
+        <Picker.Item label="Food" value="food" />
+        <Picker.Item label="Household" value="household" />
+        <Picker.Item label="Other" value="other" />
       </Picker>
 
       <Button title="Pick an image from camera roll" onPress={pickImage} />
       {image && (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
-      <TouchableOpacity
+      <Button
+        title="List It!"
         style={styles.userBtn}
         disabled={disableButton}
+        disabledStyle={styles.disabledButton}
         onPress={handleSubmit}
-      >
-        <Text style={styles.userBtnTxt}>List It!</Text>
-      </TouchableOpacity>
+      />
+      <Button
+        title="List Another Item"
+        style={styles.userBtn}
+        disabled={disableListAnother}
+        disabledStyle={styles.disabledButton}
+        onPress={handleListAnother}
+      />
     </SafeAreaView>
   );
 };

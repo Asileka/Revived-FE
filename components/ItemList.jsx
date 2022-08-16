@@ -5,35 +5,65 @@ import { View, ScrollView, StyleSheet, Image } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text, Card, Button, Icon } from "@rneui/themed";
 import { NavigationContainer } from "@react-navigation/native";
-
-import SearchBar from "./SearchBar";
-
+import { Picker } from "@react-native-picker/picker";
+import axios from "axios";
 const Cards = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [itemData, setItemData] = useState([]);
+  const [itemCategory, setItemCategory] = useState("");
+
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   fetch(`https://revive-be.herokuapp.com/api/items/`)
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then((items) => {
+  //       setItemData(() => {
+  //         return items;
+  //       });
+  //       setIsLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       setError({ err });
+  //     });
+  // }, []);
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`https://revive-be.herokuapp.com/api/items/`)
-      .then((response) => {
-        return response.json();
+    axios
+      .get(`https://revive-be.herokuapp.com/api/items/`, {
+        params: {
+          category: itemCategory,
+        },
       })
       .then((items) => {
-        setItemData(() => {
-          return items;
-        });
+        setItemData(items.data);
         setIsLoading(false);
       })
       .catch((err) => {
         setError({ err });
       });
-  }, [setItemData]);
+  }, [itemCategory]);
 
   return (
     <>
-      <SearchBar />
       <ScrollView>
+        <Picker
+          selectedValue={itemCategory}
+          onValueChange={(itemValue) => setItemCategory(itemValue)}
+        >
+          <Picker.Item label="Pick a category" value="" />
+          <Picker.Item label="All items" value="" />
+          <Picker.Item label="Clothing" value="clothing" />
+          <Picker.Item label="Books" value="books" />
+          <Picker.Item label="Games" value="games" />
+          <Picker.Item label="Electronics" value="electronics" />
+          <Picker.Item label="Food" value="food" />
+          <Picker.Item label="Household" value="household" />
+          <Picker.Item label="Other" value="other" />
+        </Picker>
         <View style={styles.container}>
           {itemData.map((i) => {
             return (

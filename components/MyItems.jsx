@@ -4,9 +4,7 @@ import { useState, useEffect, useContext } from "react";
 import { View, ScrollView, StyleSheet, Image } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text, Card, Button, Icon } from "@rneui/themed";
-import { NavigationContainer } from "@react-navigation/native";
 import { userContext } from "./Contexts";
-import SearchBar from "./SearchBar";
 
 const MyItemCards = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -54,7 +52,6 @@ const MyItemCards = ({ navigation }) => {
 
   return (
     <>
-      <SearchBar />
       <ScrollView>
         <View style={styles.container}>
           {itemData.map((i) => {
