@@ -102,8 +102,9 @@ const ListItem = ({ navigation, route }) => {
         defaultValue={itemDescription}
         placeholder="Describe your item"
       />
-      <Text>Pick item category:</Text>
+      <Text style={styles.text}>Pick item category:</Text>
       <Picker
+        style={styles.categoryPicker}
         selectedValue={itemCategory}
         onValueChange={(itemValue) => setItemCategory(itemValue)}
       >
@@ -117,20 +118,27 @@ const ListItem = ({ navigation, route }) => {
         <Picker.Item label="Other" value="other" />
       </Picker>
 
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
+      <Button
+        title="Pick an image from camera roll"
+        color="#30ab7e"
+        onPress={pickImage}
+        buttonStyle={styles.userBtn}
+      />
       {image && (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
       <Button
+        color="#30ab7e"
         title="List It!"
-        style={styles.userBtn}
+        buttonStyle={styles.userBtn}
         disabled={disableButton}
         disabledStyle={styles.disabledButton}
         onPress={handleSubmit}
       />
       <Button
+        color="#30ab7e"
+        buttonStyle={styles.userBtn}
         title="List Another Item"
-        style={styles.userBtn}
         disabled={disableListAnother}
         disabledStyle={styles.disabledButton}
         onPress={handleListAnother}
@@ -169,15 +177,17 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 3,
     alignItems: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginHorizontal: 5,
-  },
-  userBtnTxt: {
-    color: "black",
+    marginBottom: 10,
   },
   disabledButton: {
     color: "#abc7ac",
+  },
+  categoryPicker: {
+    alignItems: "center",
+    color: "#308691",
+  },
+  text: {
+    marginLeft: 8,
   },
 });
 

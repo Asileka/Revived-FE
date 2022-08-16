@@ -12,24 +12,20 @@ const SignOut = () => {
 
   return (
     <View>
-      <Button onPress={signOutPress} color="green" title="Sign Out" />
+      <Button
+        onPress={signOutPress}
+        color="#6cb8b0"
+        title="Sign Out"
+        buttonStyle={styles.button}
+      />
     </View>
   );
 };
 
 export default SignOut;
-const stylesignin = StyleSheet.create({
-  ortext: {
-    color: "black",
+const styles = StyleSheet.create({
+  button: {
     marginTop: 30,
-    textAlign: "center",
-    fontSize: 20,
     marginBottom: 36,
-  },
-  loginbutton: {
-    backgroundColor: "black",
-  },
-  disabledButton: {
-    color: "#abc7ac",
   },
 });

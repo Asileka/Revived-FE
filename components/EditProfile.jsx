@@ -101,6 +101,8 @@ const EditUsername = () => {
       </TouchableOpacity>
 
       <Button
+        color="#30ab7e"
+        buttonStyle={styles.userBtn}
         title="Pick an image for your profile picture"
         onPress={pickImage}
       />
@@ -108,6 +110,8 @@ const EditUsername = () => {
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
       <Button
+        color="#30ab7e"
+        buttonStyle={styles.userBtn}
         title="Set this image as your profile picture"
         onPress={handleSubmitAvatar}
       />
@@ -141,6 +145,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   userBtn: {
+    color: "#6cb8b0",
     borderColor: "green",
     borderWidth: 2,
     borderRadius: 3,
@@ -148,6 +153,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 12,
     marginHorizontal: 5,
+    marginBottom: 10,
   },
   userBtnTxt: {
     color: "black",

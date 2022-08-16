@@ -102,7 +102,7 @@ const Cards = ({ navigation }) => {
                 <Button
                   icon={
                     <Icon
-                      name="add"
+                      name="email"
                       color="#ffffff"
                       iconStyle={{ marginRight: 10 }}
                     />
@@ -114,7 +114,7 @@ const Cards = ({ navigation }) => {
                     marginRight: 0,
                     marginBottom: 0,
                   }}
-                  title="CLAIM NOW"
+                  title="Message Seller"
                 />
               </Card>
             );
