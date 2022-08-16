@@ -6,86 +6,111 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-
 import { Text, Card, Button, Icon } from "@rneui/themed";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-
 import { SafeAreaView, TextInput } from "react-native";
+import { useState, useEffect, useContext } from "react";
+import { userContext } from "./Contexts";
+import * as ImagePicker from "expo-image-picker";
 
-import { useState, useEffect } from "react";
-
-const EditUsername = ({ navigation, route }) => {
-  const [text1, onChangeText1] = React.useState("");
-  const [text2, onChangeText2] = React.useState("");
-  const [text3, onChangeText3] = React.useState("");
-  const [text4, onChangeText4] = React.useState("");
-
-  const [username, setUsername] = useState('');
+const EditUsername = () => {
+  const { loggedUserID, setLoggedUserID } = useContext(userContext);
+  const [newName, setNewName] = useState("");
+  const [newCharity, setNewCharity] = useState("");
   const [err, setErr] = useState("");
-
-
-
-  const [number4, onChangeNumber4] = React.useState(null);
-  const Drawer = createDrawerNavigator();
-  const [newItem, setNewItem] = useState("");
-  const [itemData, setItemData] = useState([]);
-
   const [isLoading, setIsLoading] = useState(false);
+  const [image, setImage] = useState(null);
+  const [disableButton, setDisableButton] = useState(false);
 
-  const [error, setError] = useState(null);
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
- 
+    console.log(result);
 
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+  const handleSubmitAvatar = (event) => {
+    event.preventDefault();
+    setIsLoading(true);
 
- 
+    let formDataAvatar = new FormData();
+
+    formDataAvatar.append("avatar", {
+      uri: image,
+      name: "avatar",
+      type: "image/jpeg",
+    });
+
+    fetch(`https://revive-be.herokuapp.com/api/users/${loggedUserID}/avatar`, {
+      method: "POST",
+      body: formDataAvatar,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((response) => console.log("picture success"))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const HandleChangeUsername = () => {
-    setIsLoading(true);
- 
-    setErr(null);
-    fetch(`https://revive-be.herokuapp.com/users/62f22cae71df4420fddf2cbc`, {
+    fetch(`https://revive-be.herokuapp.com/api/users/${loggedUserID}`, {
       method: "PATCH",
       body: JSON.stringify({
-    
-        name: 'John',
-
-       
+        name: newName,
+        charity: newCharity,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then((response) => 
-      response.json())
       .then((json) => {
-      
         setIsLoading(false);
+        console.log("success");
       })
       .catch((err) => {
-
         setErr("Something went wrong, please try again.");
+        console.log(err);
       });
   };
 
-  
   return (
     <SafeAreaView>
       <TextInput
         style={styles.input1}
-        onChangeText1={onChangeText1}
-        value={onChangeText1}
-        placeholder=" Enter A New Username"
-        keyboardType="text"
+        onChangeText={(newNewName) => setNewName(newNewName)}
+        defaultValue={newName}
+        placeholder="New Name"
       />
-
-      
-     
-
-    
+      <TextInput
+        style={styles.input1}
+        onChangeText={(newNewCharity) => setNewCharity(newNewCharity)}
+        defaultValue={newCharity}
+        placeholder="Charity of choice"
+      />
 
       <TouchableOpacity style={styles.userBtn} onPress={HandleChangeUsername}>
         <Text style={styles.userBtnTxt}>Save</Text>
       </TouchableOpacity>
+
+      <Button
+        title="Pick an image for your profile picture"
+        onPress={pickImage}
+      />
+      {image && (
+        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+      )}
+      <Button
+        title="Set this image as your profile picture"
+        onPress={handleSubmitAvatar}
+      />
     </SafeAreaView>
   );
 };

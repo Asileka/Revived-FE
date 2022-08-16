@@ -9,14 +9,13 @@ import {
   SafeAreaView,
 } from "react-native";
 
-import MyItemCards from "./MyItems";
 import { userContext } from "./Contexts";
 
 const MyProfile = ({ navigation, route }) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [deleted, setDeleted] = useState(false);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState("");
   const [itemData, setItemData] = useState([]);
   const { loggedUserID, setLoggedUserID } = useContext(userContext);
 
@@ -38,24 +37,6 @@ const MyProfile = ({ navigation, route }) => {
       });
   }, [setUserData]);
 
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   fetch(`https://revive-be.herokuapp.com/api/items/`)
-  //     .then((response) => {
-  //       return response.json();
-  //     })
-  //     .then((items) => {
-  //       setItemData(() => {
-  //         return items;
-  //       });
-  //       setIsLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       setError({ err });
-  //     });
-  // }, [setItemData]);
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <ScrollView
@@ -69,10 +50,9 @@ const MyProfile = ({ navigation, route }) => {
         <Image
           style={styles.userImg}
           source={{
-            uri: userData
-              ? userData.userImg ||
-                "https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg"
-              : "https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg",
+            uri:
+              userData.avatar ||
+              "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
           }}
         />
         <Text style={styles.userName}>{userData.name || ""} </Text>
@@ -83,7 +63,7 @@ const MyProfile = ({ navigation, route }) => {
             <TouchableOpacity
               style={styles.userBtn}
               onPress={() => {
-                navigation.navigate("EditProfile");
+                navigation.navigate("Edit Profile");
               }}
             >
               <Text style={styles.userBtnTxt}>Edit</Text>
@@ -93,15 +73,10 @@ const MyProfile = ({ navigation, route }) => {
 
         <View style={styles.userInfoWrapper}>
           <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>{items.length}</Text>
-            <Text style={styles.userInfoSubTitle}>Items Available</Text>
-          </View>
-          <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>{items.length}</Text>
-            <Text style={styles.userInfoSubTitle}>Items Donated</Text>
+            <Text style={styles.userInfoTitle}>{userData.items.length}</Text>
+            <Text style={styles.userInfoSubTitle}>Total items</Text>
           </View>
         </View>
-        {/* <MyItemCards itemData={itemData} /> */}
       </ScrollView>
     </SafeAreaView>
   );

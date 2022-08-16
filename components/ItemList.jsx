@@ -37,7 +37,7 @@ const Cards = ({ navigation }) => {
         <View style={styles.container}>
           {itemData.map((i) => {
             return (
-              <Card key={i.itemid}>
+              <Card key={i._id}>
                 <Card.Title>{i.itemname}</Card.Title>
                 <Card.Divider />
                 <Card.Image

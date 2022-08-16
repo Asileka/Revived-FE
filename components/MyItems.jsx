@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { useState, useEffect } from "react";
 import {
   View,
@@ -13,35 +12,22 @@ import { Text, Card, Button, Icon } from "@rneui/themed";
 import axios from "axios";
 
 const MyItemCards = () => {
-  const [items, setItems] = useState([]);
   const [itemData, setItemData] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`https://revive-be.herokuapp.com/api/items/`)
+    fetch(`https://revive-be.herokuapp.com/api/users/62f61d8a5236e2a49faffe9e`)
       .then((items) => {
-        setItemData(() => {
-          return items;
-        });
+        console.log(items.items);
+
         setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-
-  const handleDelete = (event) => {
-    event.preventDefault();
-    setIsLoading(true);
-    fetch(`https://revive-be.herokuapp.com/api/items/${itemData._id}`, {
-      method: "DELETE",
-    }).then(() => {
-      console.log(`deleted ${itemData._id}`);
-      setIsLoading(false);
-    });
-  };
 
   return (
     <>
@@ -63,10 +49,6 @@ const MyItemCards = () => {
                 <Text>Owner: {i.itemowner}</Text>
                 <Text>Added: {i.itemcreateddate}</Text>
                 <Text style={{ marginBottom: 10 }}>Item Description</Text>
-
-                <TouchableOpacity style={styles.userBtn} onPress={handleDelete}>
-                  <Text style={styles.userBtnTxt}>Delete Item</Text>
-                </TouchableOpacity>
               </Card>
             );
           })}

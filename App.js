@@ -33,7 +33,7 @@ function DetailsScreen() {
         justifyContent: "center",
       }}
     >
-      <Text>Details Screen</Text>
+      <Text>No new messages</Text>
     </View>
   );
 }
@@ -82,19 +82,12 @@ function App() {
 
               <Drawer.Screen name="My Profile" component={MyProfile} />
               <Drawer.Screen name="List Item" component={ListItem} />
-
               <Drawer.Screen name="Inbox" component={DetailsScreen} />
               <Drawer.Screen name="My Items" component={MyItemCards} />
               <Drawer.Screen name="Favourites" component={DetailsScreen} />
               <Drawer.Screen name="Edit Profile" component={EditUsername} />
-              <Drawer.Screen
-                name="Other Users Profile"
-                component={OtherUsersProfile}
-              />
-
               <Drawer.Screen name="Map" component={MyMap} />
               <Drawer.Screen name="Terms" component={DetailsScreen} />
-
               <Drawer.Screen name="Sign Out" component={SignOut} />
             </>
           ) : (
